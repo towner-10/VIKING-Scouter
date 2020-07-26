@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:viking_scouter/inputPages/input.dart';
+import 'package:viking_scouter/widgets/textInputField.dart';
 
 class NewMatchPage extends StatelessWidget {
 
@@ -38,29 +39,10 @@ class NewMatchPage extends StatelessWidget {
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 20,
-                              top: 20,
-                              right: 18
-                            ),
-                            child: TextField(
-                              style: TextStyle(
-                                fontFamily: 'TT Norms',
-                                fontSize: 15,
-                                color: Colors.black,
-                              ),
-                              decoration: InputDecoration(
-                                border: UnderlineInputBorder(),
-                                hintText: 'Enter team number...',
-                                hintStyle: TextStyle(
-                                  fontFamily: 'TT Norms',
-                                  fontSize: 15,
-                                  color: const Color(0xffd9d3d3),
-                                ),
-                              ),
-                            ),
-                          ),
+                          TextInputField(
+                            hintText: "Enter team number...", 
+                            controller: new TextEditingController()
+                          )
                         ],                  
                       ),
                       Padding(padding: EdgeInsets.symmetric(vertical: 5)),
@@ -79,30 +61,10 @@ class NewMatchPage extends StatelessWidget {
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 20,
-                              top: 20,
-                              right: 18,
-                              bottom: 20
-                            ),
-                            child: TextField(
-                              style: TextStyle(
-                                fontFamily: 'TT Norms',
-                                fontSize: 15,
-                                color: Colors.black,
-                              ),
-                              decoration: InputDecoration(
-                                border: UnderlineInputBorder(),
-                                hintText: 'Enter match number...',
-                                hintStyle: TextStyle(
-                                  fontFamily: 'TT Norms',
-                                  fontSize: 15,
-                                  color: const Color(0xffd9d3d3),
-                                ),
-                              ),
-                            ),
-                          ),
+                          TextInputField(
+                            hintText: "Enter match number...", 
+                            controller: new TextEditingController()
+                          )
                         ],                  
                       ),
                     ],
@@ -115,7 +77,10 @@ class NewMatchPage extends StatelessWidget {
         )
       ),
       bottomNavigationBar: GestureDetector(
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InputPage())),
+        onTap: () {
+          Feedback.forTap(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => InputPage()));
+        },
         child: Container(
           width: MediaQuery. of(context).size.width,
           height: 81.0,
