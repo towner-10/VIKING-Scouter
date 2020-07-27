@@ -4,8 +4,9 @@ class TextInputField extends StatelessWidget {
 
   final String hintText;
   final TextEditingController controller;
+  final TextInputType type;
 
-  TextInputField({@required this.hintText, @required this.controller});
+  TextInputField({@required this.hintText, @required this.controller, this.type = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class TextInputField extends StatelessWidget {
           color: Colors.black,
         ),
         cursorColor: Colors.black,
+        keyboardType: type,
         decoration: InputDecoration(
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(

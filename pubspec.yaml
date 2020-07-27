@@ -11,9 +11,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  bubble_tab_indicator: ^0.1.4
   hive: ^1.4.2
   hive_flutter: ^0.3.1
+  path_provider: ^1.6.11
+  fancy_bottom_navigation: ^0.3.2
+  bubble_tab_indicator: ^0.1.4
 
 dev_dependencies:
   hive_generator: ^0.7.1

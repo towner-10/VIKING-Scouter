@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/inputPages/input.dart';
 import 'package:viking_scouter/widgets/textInputField.dart';
 
 class NewMatchPage extends StatelessWidget {
 
-  NewMatchPage();
+  TextEditingController _teamNumberController;
+  TextEditingController _matchNumberController;
+
+  NewMatchPage() {
+    _teamNumberController = new TextEditingController();
+    _matchNumberController = new TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +48,8 @@ class NewMatchPage extends StatelessWidget {
                           ),
                           TextInputField(
                             hintText: "Enter team number...", 
-                            controller: new TextEditingController()
+                            controller: _teamNumberController,
+                            type: TextInputType.number,
                           )
                         ],                  
                       ),
@@ -63,7 +71,8 @@ class NewMatchPage extends StatelessWidget {
                           ),
                           TextInputField(
                             hintText: "Enter match number...", 
-                            controller: new TextEditingController()
+                            controller: _matchNumberController,
+                            type: TextInputType.number,
                           )
                         ],                  
                       ),
@@ -79,7 +88,17 @@ class NewMatchPage extends StatelessWidget {
       bottomNavigationBar: GestureDetector(
         onTap: () {
           Feedback.forTap(context);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => InputPage()));
+
+          if (_teamNumberController.text.length != 0 || _matchNumberController.text.length != 0) {
+            Database.getInstance().initNewMatch(int.parse(_teamNumberController.text), int.parse(_matchNumberController.text));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => InputPage()));
+          }
+          else {
+            _teamNumberController.clear();
+            _matchNumberController.clear();
+
+            _emptyInput(context);
+          }
         },
         child: Container(
           width: MediaQuery. of(context).size.width,
@@ -101,6 +120,54 @@ class NewMatchPage extends StatelessWidget {
           ),
         ),
       )
+    );
+  }
+
+  Future<void> _emptyInput(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Empty Input',
+            style: TextStyle(
+              fontFamily: 'TT Norms',
+              fontSize: 25,
+              color: const Color(0xff141333)
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'One of the input fields was empty. Please complete the form before continuing.',
+                  style: TextStyle(
+                    fontFamily: 'TT Norms',
+                    fontSize: 15,
+                    color: const Color(0xff141333)
+                  ),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget> [
+            FlatButton(
+              child: Text(
+                'Confirm',
+                style: TextStyle(
+                  fontFamily: 'TT Norms',
+                  fontSize: 15,
+                  color: const Color(0xff141333)
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

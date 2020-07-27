@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/inputPages/newMatch.dart';
+import 'package:viking_scouter/mainPages/home.dart';
 
 class Onboarding extends StatelessWidget {
   @override
@@ -47,7 +49,8 @@ class Onboarding extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   Feedback.forTap(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => NewMatchPage()));
+                  Database.getInstance().updatePreference('firstLaunch', false);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
                 },
                 child: Container(
                   width: 224.0,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:viking_scouter/widgets/subHeader.dart';
 
 class InputItem extends StatelessWidget {
   
@@ -12,18 +13,7 @@ class InputItem extends StatelessWidget {
     return Column(
       children: [
         Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            title,
-            style: TextStyle(
-              fontFamily: 'TT Norms',
-              fontSize: 25,
-              color: const Color(0xff000000),
-            ),
-            textAlign: TextAlign.left,
-          ),
-        ),
+        SubHeader(title),
         Padding(padding: EdgeInsets.symmetric(vertical: 5)),
         Container(
           width: MediaQuery.of(context).size.width * 0.75,

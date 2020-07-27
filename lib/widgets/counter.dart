@@ -18,7 +18,9 @@ class CounterState extends State<Counter> {
 
   int value;
 
-  CounterState(this.onChange, this.value, this.minValue);
+  CounterState(this.onChange, this.value, this.minValue) {
+    onChange(value);
+  }
 
   _updateValue(int value) {
     setState(() {
@@ -27,6 +29,7 @@ class CounterState extends State<Counter> {
       if (minValue != null) {
         if (this.value <= minValue) {
           this.value = minValue;
+          onChange(this.value);
           return;
         }
       }
