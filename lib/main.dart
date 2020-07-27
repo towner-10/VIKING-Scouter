@@ -12,7 +12,7 @@ class VIKINGScouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
     Database _db = Database.getInstance();
 
     return FutureBuilder(

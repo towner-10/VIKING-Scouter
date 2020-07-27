@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:viking_scouter/customColors.dart';
 
 class TextInputField extends StatelessWidget {
 
@@ -31,6 +32,11 @@ class TextInputField extends StatelessWidget {
             borderSide: BorderSide(
               color: Colors.black
             )
+          ),
+          enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  color: CustomColors.grey
+              )
           ),
           hintText: hintText,
           hintStyle: TextStyle(

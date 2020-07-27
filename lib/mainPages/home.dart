@@ -4,6 +4,7 @@ import 'package:viking_scouter/customColors.dart';
 import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/mainPages/settings.dart';
 import 'package:viking_scouter/mainPages/teams.dart';
+import 'package:viking_scouter/widgets/subHeader.dart';
 
 class Home extends StatefulWidget {
   
@@ -54,6 +55,33 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             ),
                             textAlign: TextAlign.left,
                           )
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 20, bottom: 10),
+                          child:  SubHeader('Recent Matches'),
+                        ),
+                        Wrap(
+                          children: [
+                            Card(
+                              color: CustomColors.darkBlue,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "FRC 254",
+                                    style: TextStyle(
+                                        color: Colors.white
+                                    ),
+                                  ),
+                                  Text(
+                                    "Stats",
+                                    style: TextStyle(
+                                        color: Colors.white
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
                         )
                       ],
                     )

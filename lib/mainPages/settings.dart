@@ -56,79 +56,81 @@ class SettingsState extends State<Settings> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height - kToolbarHeight - 81,
-            child: Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20, left: 20, right: 10),
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Settings',
-                        style: TextStyle(
-                          fontFamily: 'TT Norms',
-                          fontSize: 30,
-                          color: const Color(0xff000000),
-                          fontWeight: FontWeight.w700,
-                        ),
-                        textAlign: TextAlign.left,
-                      )
+          Padding(
+            padding: EdgeInsets.only(top: 20, left: 20, right: 10),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Settings',
+                    style: TextStyle(
+                      fontFamily: 'TT Norms',
+                      fontSize: 30,
+                      color: const Color(0xff000000),
+                      fontWeight: FontWeight.w700,
                     ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 15)),
-                    SubHeader('Scout Name'),
-                    TextInputField(hintText: 'Enter name...', controller: _scoutNameController),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 15)),
-                    SubHeader('Competition'),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 5)),
-                    DropdownButton(
-                      key: dropdownKey,
-                      items: items + [
-                        new DropdownMenuItem(
+                    textAlign: TextAlign.left,
+                  )
+                ),
+                Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+                SubHeader('Scout Name'),
+                TextInputField(hintText: 'Enter name...', controller: _scoutNameController),
+                Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+                SubHeader('Competition'),
+                Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 18),
+                  child: DropdownButton(
+                    key: dropdownKey,
+                    isExpanded: true,
+                    underline: Container(
+                      color: CustomColors.grey,
+                      height: 1.0
+                    ),
+                    items: items + [
+                      new DropdownMenuItem(
                           child: Row(
                             children: [
                               Icon(Icons.add),
                               Text(' Add Competition')
                             ],
-                          ), 
+                          ),
                           value: 'add'
-                        ),
-                        new DropdownMenuItem(
+                      ),
+                      new DropdownMenuItem(
                           child: Row(
                             children: [
                               Icon(Icons.remove),
                               Text(' Remove Competition')
                             ],
-                          ), 
+                          ),
                           value: 'remove'
-                        )
-                      ],
-                      value: _selectedCompetition,
-                      style: TextStyle(
+                      )
+                    ],
+                    value: _selectedCompetition,
+                    style: TextStyle(
                         fontFamily: 'TT Norms',
                         fontSize: 15,
                         color: Colors.black
-                      ),
-                      onChanged: (value) {
-                        if (value == 'add') {
-                          _newCompetition(context);
-                          return;
-                        }
-                        else if (value == 'remove') {
-                          _deleteCompetition(context);
-                          return;
-                        }
-
-                        setState(() {
-                          _selectedCompetition = value;
-                        });
-                      }
                     ),
-                  ],
-                )
-              ),
-            ),
+                    onChanged: (value) {
+                      if (value == 'add') {
+                        _newCompetition(context);
+                        return;
+                      }
+                      else if (value == 'remove') {
+                        _deleteCompetition(context);
+                        return;
+                      }
+
+                      setState(() {
+                        _selectedCompetition = value;
+                      });
+                    }
+                  ),
+                ),
+              ],
+            )
           ),
           Padding(padding: EdgeInsets.symmetric(vertical: 30)),
           GestureDetector(
@@ -328,7 +330,6 @@ class SettingsState extends State<Settings> {
               ),
               onPressed: () {
                 if (items.length <= 2) {
-                  Scaffold.of(context).showSnackBar(snackBar);
                   Navigator.of(context).pop();
                   return;
                 }

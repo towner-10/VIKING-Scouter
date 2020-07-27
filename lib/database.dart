@@ -95,7 +95,13 @@ class Database {
       }
     });
 
-    return new MatchData(teamNumber, matchNumber, DateTime.now(), getPreferenceDefault('scoutName', null), data);
+    return new MatchData(
+      teamNumber: teamNumber,
+      matchNumber: matchNumber,
+      time: DateTime.now(),
+      scout: getPreferenceDefault('scoutName', null),
+      data: data
+    );
   }
 
   static Database getInstance() {
