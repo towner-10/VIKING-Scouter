@@ -50,7 +50,8 @@ class Onboarding extends StatelessWidget {
                 onTap: () {
                   Feedback.forTap(context);
                   Database.getInstance().updatePreference('firstLaunch', false);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
                 },
                 child: Container(
                   width: 224.0,

@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:viking_scouter/customColors.dart';
+import 'package:viking_scouter/database.dart';
 
 class TextInputField extends StatelessWidget {
 
   final String hintText;
-  final TextEditingController controller;
   final TextInputType type;
 
-  TextInputField({@required this.hintText, @required this.controller, this.type = TextInputType.text});
+  TextEditingController controller;
+
+  TextInputField({@required this.hintText, this.type = TextInputType.text, this.controller, String dbName}) {
+    if (controller == null) {
+      controller = new TextEditingController();
+
+      controller.addListener(() {
+        if (type == TextInputType.number) {
+          Database.getInstance().updateWorkingMatchDataValue(dbName, int.parse(controller.text) == null ? 0 : int.parse(controller.text));
+        }
+        else {
+          Database.getInstance().updateWorkingMatchDataValue(dbName, controller.text);
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

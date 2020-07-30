@@ -21,6 +21,9 @@ dev_dependencies:
   hive_generator: ^0.7.1
   build_runner: ^1.10.0
 
+dependency_overrides:
+  analyzer: 0.39.14
+
 flutter:
 
   uses-material-design: true

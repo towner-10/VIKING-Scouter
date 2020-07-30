@@ -4,7 +4,14 @@ import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/mainPages/home.dart';
 import 'package:viking_scouter/mainPages/onboarding.dart';
 
+Database _db;
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  _db = Database.getInstance();
+  await _db.initializeHive();
+
   runApp(VIKINGScouter());
 }
 
@@ -12,32 +19,19 @@ class VIKINGScouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
-    Database _db = Database.getInstance();
+    SystemChrome.setEnabledSystemUIOverlays([]);
 
-    return FutureBuilder(
-      future: _db.initializeHive(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (_db.isFirstLaunch() == true) {
-            return MaterialApp(
-              title: 'VIKING Scouter',
-              home: Onboarding(),
-            );
-          }
-          else {
-            return MaterialApp(
-              title: 'VIKING Scouter',
-              home: Home(),
-            );
-          }
-        }
-
-        return MaterialApp(
-          title: 'Loading...',
-          home: Container()
-        );
-      },
-    );
+    if (_db.isFirstLaunch() == true) {
+      return MaterialApp(
+        title: 'VIKING Scouter',
+        home: Onboarding(),
+      );
+    }
+    else {
+      return MaterialApp(
+        title: 'VIKING Scouter',
+        home: Home(),
+      );
+    }
   }
 }

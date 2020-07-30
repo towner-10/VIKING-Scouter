@@ -15,23 +15,25 @@ class InputItem extends StatelessWidget {
         Padding(padding: EdgeInsets.symmetric(vertical: 10)),
         SubHeader(title),
         Padding(padding: EdgeInsets.symmetric(vertical: 5)),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.75,
-          height: 60.0,
-          margin: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24.0),
-            color: const Color(0xfff8f8f8),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0x29000000),
-                offset: Offset(0, 3),
-                blurRadius: 6,
-              ),
-            ],
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 40),
+          child: Container(
+            height: 60.0,
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24.0),
+              color: const Color(0xfff8f8f8),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0x29000000),
+                  offset: Offset(0, 3),
+                  blurRadius: 6,
+                ),
+              ],
+            ),
+            child: dataType,
           ),
-          child: dataType,
-        ),
+        )
       ],
     );
   }

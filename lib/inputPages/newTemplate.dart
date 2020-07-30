@@ -1,12 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:viking_scouter/database.dart';
-import 'package:viking_scouter/inputPages/input.dart';
+import 'package:viking_scouter/inputPages/templateDesigner.dart';
 import 'package:viking_scouter/widgets/textInputField.dart';
 
-class NewMatchPage extends StatelessWidget {
+class NewTemplatePage extends StatelessWidget {
 
-  final TextEditingController _teamNumberController = new TextEditingController();
-  final TextEditingController _matchNumberController = new TextEditingController();
+  TextEditingController _templateNameController;
+
+  NewTemplatePage() {
+    _templateNameController = new TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,7 @@ class NewMatchPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Team Number',
+                              'Template Name',
                               style: TextStyle(
                                 fontFamily: 'TT Norms',
                                 fontSize: 30,
@@ -48,35 +52,11 @@ class NewMatchPage extends StatelessWidget {
                             ),
                           ),
                           TextInputField(
-                            hintText: "Enter team number...",
-                            controller: _teamNumberController,
-                            type: TextInputType.number,
+                            hintText: "Enter template name...", 
+                            controller: _templateNameController
                           )
                         ],                  
                       ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 5)),
-                      Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Match Number',
-                              style: TextStyle(
-                                fontFamily: 'TT Norms',
-                                fontSize: 30,
-                                color: const Color(0xff000000),
-                                fontWeight: FontWeight.w700,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          TextInputField(
-                            hintText: "Enter match number...", 
-                            controller: _matchNumberController,
-                            type: TextInputType.number,
-                          )
-                        ],                  
-                      )
                     ],
                   ),
                 )
@@ -90,13 +70,12 @@ class NewMatchPage extends StatelessWidget {
         onTap: () {
           Feedback.forTap(context);
 
-          if (_teamNumberController.text.length != 0 || _matchNumberController.text.length != 0) {
-            Database.getInstance().initNewMatch(int.parse(_teamNumberController.text), int.parse(_matchNumberController.text));
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => InputPage())).then((value) => Navigator.of(context).pop());
+          if (_templateNameController.text.length != 0) {
+            Database.getInstance().initNewTemplate(_templateNameController.text);
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => TemplateDesigner())).then((value) => Navigator.of(context).pop());
           }
           else {
-            _teamNumberController.clear();
-            _matchNumberController.clear();
+            _templateNameController.clear();
 
             _emptyInput(context);
           }

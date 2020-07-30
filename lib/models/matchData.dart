@@ -1,13 +1,14 @@
 class MatchData {
-  final int teamNumber;
-  final int matchNumber;
+  
+  final int team;
+  final int match;
   final DateTime time;
   final String scout;
   final Map<String, dynamic> data;
 
   MatchData({
-    this.teamNumber,
-    this.matchNumber,
+    this.team,
+    this.match,
     this.time,
     this.scout,
     this.data
@@ -15,18 +16,18 @@ class MatchData {
 
   factory MatchData.fromJson(Map<String, dynamic> json){
     return MatchData(
-      teamNumber: json['id'],
-      matchNumber: json['name'],
+      team: json['team'],
+      match: json['match'],
       time: json['time'],
       scout: json['scout'],
-      data: json['data']
+      data: Map<String, dynamic>.from(json['data'])
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'team': this.teamNumber,
-      'match': this.matchNumber,
+      'team': this.team,
+      'match': this.match,
       'time': this.time,
       'scout': this.scout,
       'data': this.data

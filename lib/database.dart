@@ -4,20 +4,30 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:viking_scouter/models/matchData.dart';
+import 'package:viking_scouter/models/templateData.dart';
 
 class Database {
   static Database _instance;
 
   Box _workingMatchData;
+  Box _workingTemplateData;
   Box _matchData;
+  Box _templateData;
   Box _teamData;
   Box _preferences;
 
   /// Initializes a new match within the database with the team number and match number in the temp box
-  initNewMatch(int teamNumber, int matchNumber) {
-    _workingMatchData.clear();
-    _workingMatchData.put('teamNumber', teamNumber);
-    _workingMatchData.put('matchNumber', matchNumber);
+  initNewMatch(int teamNumber, int matchNumber) async {
+    _workingMatchData.clear().then((value) {
+      _workingMatchData.put('teamNumber', teamNumber);
+      _workingMatchData.put('matchNumber', matchNumber);
+    });
+  }
+
+  initNewTemplate(String name) async {
+    _workingTemplateData.clear().then((value) {
+      _workingTemplateData.put('name', name);
+    });
   }
 
   /// Add a new match
@@ -30,12 +40,56 @@ class Database {
     _matchData.deleteAt(index);
   }
 
+  clearMatchData() {
+    _matchData.clear();
+  }
+
+  /// Add a new template
+  newTemplate(Template data) {
+    _templateData.add(data);
+  }
+
+  /// Remove a template from the database using its index
+  removeTemplate(int index) {
+    _templateData.deleteAt(index);
+  }
+
+  removeCompetition(int index) {
+    List<String> data = _preferences.get('competitions');
+
+    data.removeAt(index);
+
+    _preferences.put('competitions', data);
+  }
+
+  clearTemplateData() {
+    _templateData.clear();
+  }
+
+  List<MatchData> getMatches() {
+    List<MatchData> matches = new List<MatchData>();
+
+    for (int i = 0; i < _matchData.length; i++) {
+      matches.add(MatchData.fromJson(Map<String, dynamic>.from(_matchData.getAt(i))));
+    }
+
+    return matches;
+  }
+
+  List<Template> getTemplates() {
+    List<Template> templates = new List<Template>();
+
+    _templateData.toMap().forEach((key, value) {
+      templates.add(value);
+    });
+
+    templates.add(defaultTemplate);
+
+    return templates;
+  }
+
   /// This will update a key in the workingMatchData Hive database with the given value.
   /// Returns a bool to represent the success of the operation.
-  /// 
-  /// ```dart
-  /// updateWorkingMatchDataValue('key', true);
-  /// ```
   bool updateWorkingMatchDataValue(String key, dynamic value) {
     if (_workingMatchData.isOpen == true) {
       _workingMatchData.put(key, value);
@@ -43,6 +97,18 @@ class Database {
     }
 
     return false;
+  }
+
+  bool updateWorkingTemplateDataValue(String key, dynamic value) {
+    if (_workingTemplateData.isOpen == true) {
+      return true;
+    }
+
+    return false;
+  }
+
+  dynamic getWorkingTemplateDataValue(String key) {
+    return _workingTemplateData.get(key);
   }
 
   bool isFirstLaunch() {
@@ -76,7 +142,7 @@ class Database {
     return _preferences.get('competitions', defaultValue: ['Miami Valley Regional', 'Greater Kansas City Regional']);
   }
 
-  MatchData getValues() {
+  MatchData getWorkingMatchDataValues() {
     int teamNumber;
     int matchNumber;
     Map<String, dynamic> data = new Map<String, dynamic>();
@@ -96,10 +162,10 @@ class Database {
     });
 
     return new MatchData(
-      teamNumber: teamNumber,
-      matchNumber: matchNumber,
+      team: teamNumber,
+      match: matchNumber,
       time: DateTime.now(),
-      scout: getPreferenceDefault('scoutName', null),
+      scout: getPreferenceDefault('scoutName', '').toString(),
       data: data
     );
   }
@@ -115,9 +181,15 @@ class Database {
 
     await Hive.initFlutter(dir.path + "/database");
 
+    Hive.registerAdapter(TemplateAdapter());
+    Hive.registerAdapter(TemplateDataAdapter());
+    Hive.registerAdapter(TemplateDataTypeAdapter());
+
     _workingMatchData = await Hive.openBox('workingMatchData');
+    _workingTemplateData = await Hive.openBox('workingTemplateData');
     _preferences = await Hive.openBox('preferences');
     _matchData = await Hive.openBox('matchData');
+    _templateData = await Hive.openBox<Template>('templateData');
     _teamData = await Hive.openBox('teamData');
   }
 }
