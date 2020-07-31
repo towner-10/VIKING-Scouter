@@ -7,6 +7,7 @@ import 'package:viking_scouter/widgets/counter.dart';
 import 'package:viking_scouter/widgets/header.dart';
 import 'package:viking_scouter/widgets/inputItem.dart';
 import 'package:viking_scouter/widgets/textInputField.dart';
+import 'package:viking_scouter/widgets/timer.dart';
 
 class InputPage extends StatelessWidget {
 
@@ -78,16 +79,12 @@ class InputPage extends StatelessWidget {
             ));
             break;
           case TemplateDataType.Timer:
-            widgets.add(
-              Column(children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 40
-                  )
-                ),
-                Header(_template.data[i].title),
-              ])
-            );
+            widgets.add(InputItem(
+              title: _template.data[i].title,
+              dataType: TimerWidget(
+                onChange: (value) => _db.updateWorkingMatchDataValue(_template.data[i].dbName, value.inSeconds),
+              )
+            ));
             break;
         }
       }
