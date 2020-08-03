@@ -36,7 +36,9 @@ class TeamPageState extends State<TeamPage> {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: imageFiles.map((e) => Image.file(e)).toList(),
+            children: imageFiles.map((e) {
+              Image.file(e);
+            }).toList(),
           )
         ],
       ),

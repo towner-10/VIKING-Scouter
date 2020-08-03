@@ -40,9 +40,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<key>NSCameraUsageDescription</key>
-	<key>NSMicrophoneUsageDescription</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Can VIKING Scouter use the Photo Library?</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Can VIKING Scouter use the Camera?</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Can VIKING Scouter use the Microphone?</string>
 </dict>
 </plist>
