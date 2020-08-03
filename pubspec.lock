@@ -105,7 +105,7 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0-nullsafety"
+    version: "1.0.0"
   charcode:
     dependency: transitive
     description:
@@ -140,7 +140,7 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.15.0-nullsafety"
+    version: "1.14.13"
   convert:
     dependency: transitive
     description:
@@ -179,9 +179,11 @@ packages:
   fancy_bottom_navigation:
     dependency: "direct main"
     description:
-      name: fancy_bottom_navigation
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: f5ddacb04b78824a529cccdbfe1927120220c5e2
+      url: "git://github.com/atessift/fancy_bottom_navigation.git"
+    source: git
     version: "0.3.2"
   file:
     dependency: transitive
@@ -341,7 +343,7 @@ packages:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0-nullsafety"
+    version: "1.1.8"
   mime:
     dependency: transitive
     description:
@@ -418,7 +420,7 @@ packages:
       name: petitparser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "3.0.4"
   platform:
     dependency: transitive
     description:
@@ -556,14 +558,14 @@ packages:
       name: typed_data
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0-nullsafety"
+    version: "1.2.0"
   vector_math:
     dependency: transitive
     description:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0-nullsafety"
+    version: "2.0.8"
   watcher:
     dependency: transitive
     description:
@@ -591,7 +593,7 @@ packages:
       name: xml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.0"
+    version: "4.2.0"
   yaml:
     dependency: transitive
     description:
@@ -600,5 +602,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.9.0-18.0 <2.9.0"
+  dart: ">=2.9.0-14.0.dev <3.0.0"
   flutter: ">=1.12.13+hotfix.5 <2.0.0"

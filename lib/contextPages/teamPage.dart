@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:viking_scouter/customColors.dart';
 import 'package:viking_scouter/widgets/header.dart';
 
 final ImagePicker picker = ImagePicker();
@@ -19,6 +20,8 @@ class TeamPageState extends State<TeamPage> {
   Future pickImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
+    print(pickedFile.path);
+
     setState(() {
       imageFiles.add(File(pickedFile.path));
     });
@@ -27,20 +30,44 @@ class TeamPageState extends State<TeamPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Header('Images'),
-          RaisedButton(onPressed: () {
-            pickImage();
-          }, child: Text('New Image')),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: imageFiles.map((e) {
-              Image.file(e);
-            }).toList(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: CustomColors.darkBlue,
+        onPressed: () {
+          pickImage();
+        },
+      ),
+      body: SafeArea(
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                    padding: EdgeInsets.only(top: 15, left: 5),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => Navigator.of(context).pop()),
+                    )
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 15, left: 15, bottom: 30),
+                  child: Header('Images'),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: imageFiles.map((e) => Image(image: ResizeImage(MemoryImage(e.readAsBytesSync()), width: 175))).toList(),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                )
+              ],
+            ),
           )
-        ],
+        ),
       ),
     );
   }

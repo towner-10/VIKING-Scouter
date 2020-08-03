@@ -112,22 +112,24 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ],
         ),
       ), 
-      bottomNavigationBar: FancyBottomNavigation(
-        tabs: [
-          TabData(iconData: Icons.home, title: "Home"),
-          TabData(iconData: Icons.flag, title: "Teams"),
-          TabData(iconData: Icons.settings, title: "Settings")
-        ],
-        onTabChangedListener: (position) {
-          setState(() {
-            _bottomNavIndex = position;
-            controller.jumpToPage(_bottomNavIndex);
-          });
-        },
-        circleColor: CustomColors.darkBlue,
-        activeIconColor: Colors.white,
-        textColor: CustomColors.darkBlue,
-        inactiveIconColor: CustomColors.darkBlue,
+      bottomNavigationBar: SafeArea(
+        child: FancyBottomNavigation(
+          tabs: [
+            TabData(iconData: Icons.home, title: "Home"),
+            TabData(iconData: Icons.flag, title: "Teams"),
+            TabData(iconData: Icons.settings, title: "Settings")
+          ],
+          onTabChangedListener: (position) {
+            setState(() {
+              _bottomNavIndex = position;
+              controller.jumpToPage(_bottomNavIndex);
+            });
+          },
+          circleColor: CustomColors.darkBlue,
+          activeIconColor: Colors.white,
+          textColor: CustomColors.darkBlue,
+          inactiveIconColor: CustomColors.darkBlue,
+        )
       )
     );
   }
