@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:viking_scouter/contextPages/teamPage.dart';
 
 class Teams extends StatelessWidget {
   @override
@@ -22,6 +23,12 @@ class Teams extends StatelessWidget {
                     ),
                     textAlign: TextAlign.left,
                   )
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(new MaterialPageRoute(builder: (context) => TeamPage()));
+                  },
+                  child: Text('Image Testing'),
                 )
               ],
             )

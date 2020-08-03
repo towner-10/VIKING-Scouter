@@ -4,9 +4,11 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:viking_scouter/models/matchData.dart';
+import 'package:viking_scouter/models/teamData.dart';
 import 'package:viking_scouter/models/templateData.dart';
 
 class Database {
+  
   static Database _instance;
 
   Box _workingMatchData;
@@ -184,12 +186,13 @@ class Database {
     Hive.registerAdapter(TemplateAdapter());
     Hive.registerAdapter(TemplateDataAdapter());
     Hive.registerAdapter(TemplateDataTypeAdapter());
+    Hive.registerAdapter(TeamDataAdapter());
 
     _workingMatchData = await Hive.openBox('workingMatchData');
     _workingTemplateData = await Hive.openBox('workingTemplateData');
     _preferences = await Hive.openBox('preferences');
     _matchData = await Hive.openBox('matchData');
     _templateData = await Hive.openBox<Template>('templateData');
-    _teamData = await Hive.openBox('teamData');
+    _teamData = await Hive.openBox<TeamData>('teamData');
   }
 }
