@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:viking_scouter/customColors.dart';
 import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/inputPages/newMatch.dart';
-import 'package:viking_scouter/inputPages/newTemplate.dart';
 import 'package:viking_scouter/mainPages/settings.dart';
 import 'package:viking_scouter/mainPages/teams.dart';
 import 'package:viking_scouter/models/matchData.dart';
@@ -112,24 +109,23 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ],
         ),
       ), 
-      bottomNavigationBar: SafeArea(
-        child: FancyBottomNavigation(
-          tabs: [
-            TabData(iconData: Icons.home, title: "Home"),
-            TabData(iconData: Icons.flag, title: "Teams"),
-            TabData(iconData: Icons.settings, title: "Settings")
-          ],
-          onTabChangedListener: (position) {
-            setState(() {
-              _bottomNavIndex = position;
-              controller.jumpToPage(_bottomNavIndex);
-            });
-          },
-          circleColor: CustomColors.darkBlue,
-          activeIconColor: Colors.white,
-          textColor: CustomColors.darkBlue,
-          inactiveIconColor: CustomColors.darkBlue,
-        )
+      bottomNavigationBar: FancyBottomNavigation(
+        tabs: [
+          TabData(iconData: Icons.home, title: "Home"),
+          TabData(iconData: Icons.flag, title: "Teams"),
+          TabData(iconData: Icons.settings, title: "Settings")
+        ],
+        onTabChangedListener: (position) {
+          setState(() {
+            _bottomNavIndex = position;
+            controller.jumpToPage(_bottomNavIndex);
+          });
+        },
+        bottomPadding: 10,
+        circleColor: CustomColors.darkBlue,
+        activeIconColor: Colors.white,
+        textColor: CustomColors.darkBlue,
+        inactiveIconColor: CustomColors.darkBlue,
       )
     );
   }

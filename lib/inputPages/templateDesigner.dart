@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:viking_scouter/customColors.dart';
 import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/models/templateData.dart';
-import 'package:viking_scouter/widgets/bubbleTab.dart';
-import 'package:viking_scouter/widgets/counter.dart';
 import 'package:viking_scouter/widgets/header.dart';
-import 'package:viking_scouter/widgets/inputItem.dart';
 import 'package:viking_scouter/widgets/textInputField.dart';
+import 'package:unicorndial/unicorndial.dart';
 
 class TemplateDesigner extends StatefulWidget {
 
@@ -20,11 +18,39 @@ class TemplateDesignerState extends State<TemplateDesigner> {
 
   List<TemplateData> items = new List<TemplateData>();
 
+  List<UnicornButton> childButtons = List<UnicornButton>();
+
   @override
   void initState() { 
     super.initState();
 
     _db = Database.getInstance();
+
+    childButtons.add(UnicornButton(
+      hasLabel: true,
+      labelText: 'Default Items',
+      labelColor: Colors.black,
+      currentButton: FloatingActionButton(
+        heroTag: 'default',
+        mini: true,
+        backgroundColor: CustomColors.darkBlue,
+        child: Icon(Icons.add_circle),
+        onPressed: () => _addDefaultItemWindow(context).then((value) => setState(() {})),
+      ),
+    ));
+
+    childButtons.add(UnicornButton(
+      hasLabel: true,
+      labelText: 'Custom Item',
+      labelColor: Colors.black,
+      currentButton: FloatingActionButton(
+        heroTag: 'custom',
+        mini: true,
+        backgroundColor: CustomColors.darkBlue,
+        child: Icon(Icons.add_circle_outline),
+        onPressed: () => _addNewItemWindow(context).then((value) => setState(() {})),
+      ),
+    ));
   }
 
   @override
@@ -32,11 +58,25 @@ class TemplateDesignerState extends State<TemplateDesigner> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(top: 15, left: 15),
+          padding: EdgeInsets.only(top: 15),
           child: Container(
             height: MediaQuery.of(context).size.height,
             child: ReorderableListView(
-              header: Header(_db.getWorkingTemplateDataValue('name')),
+              header: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 5),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => Navigator.of(context).pop()),
+                    )
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Header(_db.getWorkingTemplateDataValue('name')),
+                  )
+                ],
+              ),
               children: items.map((e) {
                 String type;
 
@@ -64,12 +104,13 @@ class TemplateDesignerState extends State<TemplateDesigner> {
                 return Dismissible(
                   key: ValueKey(e),
                   background: Container(color: Colors.red),
+                  direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
                     setState(() {
                       items.remove(e);
                     });
                   },
-                  child: ListTile(title: Text(e.title), subtitle: Text(type)),
+                  child: ListTile(title: Text(e.title), subtitle: Text(type), trailing: Icon(Icons.menu)),
                 );
               }).toList().cast<Widget>(),
               onReorder: (oldIndex, newIndex) {
@@ -85,10 +126,11 @@ class TemplateDesignerState extends State<TemplateDesigner> {
           )
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _addNewItemWindow(context).then((value) => setState(() {})),
-        backgroundColor: CustomColors.darkBlue,
-        child: Icon(Icons.add),
+      floatingActionButton: UnicornDialer(
+        parentButtonBackground: CustomColors.darkBlue,
+        orientation: UnicornOrientation.VERTICAL,
+        parentButton: Icon(Icons.add),
+        childButtons: childButtons,
       ),
       bottomNavigationBar: GestureDetector(
         onTap: () {
@@ -158,6 +200,219 @@ class TemplateDesignerState extends State<TemplateDesigner> {
                               ),
                               Text(
                                 "True/False",
+                                style: TextStyle(
+                                  fontFamily: 'TT Norms',
+                                  fontSize: 15,
+                                  color: Colors.black
+                                ),
+                              )
+                            ]
+                          )
+                        )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        _addNewItemTitleWindow(context, TemplateDataType.Counter);
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.add_circle_outline,
+                                size: 50,
+                              ),
+                              Text(
+                                "Counter",
+                                style: TextStyle(
+                                  fontFamily: 'TT Norms',
+                                  fontSize: 15,
+                                  color: Colors.black
+                                ),
+                              )
+                            ]
+                          )
+                        )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        _addNewItemTitleWindow(context, TemplateDataType.TextInput);
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.short_text,
+                                size: 50,
+                              ),
+                              Text(
+                                "Text Input",
+                                style: TextStyle(
+                                  fontFamily: 'TT Norms',
+                                  fontSize: 15,
+                                  color: Colors.black
+                                ),
+                              )
+                            ]
+                          )
+                        )
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(padding: EdgeInsets.symmetric(vertical: 5)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        _addNewItemTitleWindow(context, TemplateDataType.NumberInput);
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.score,
+                                size: 50,
+                              ),
+                              Text(
+                                "Number Input",
+                                style: TextStyle(
+                                  fontFamily: 'TT Norms',
+                                  fontSize: 15,
+                                  color: Colors.black
+                                ),
+                              )
+                            ]
+                          )
+                        )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        _addNewItemTitleWindow(context, TemplateDataType.Timer);
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.timer,
+                                size: 50,
+                              ),
+                              Text(
+                                "Timer",
+                                style: TextStyle(
+                                  fontFamily: 'TT Norms',
+                                  fontSize: 15,
+                                  color: Colors.black
+                                ),
+                              )
+                            ]
+                          )
+                        )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        _addNewItemTitleWindow(context, TemplateDataType.Header);
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.view_headline,
+                                size: 50,
+                              ),
+                              Text(
+                                "Header",
+                                style: TextStyle(
+                                  fontFamily: 'TT Norms',
+                                  fontSize: 15,
+                                  color: Colors.black
+                                ),
+                              )
+                            ]
+                          )
+                        )
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget> [
+            FlatButton(
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  fontFamily: 'TT Norms',
+                  fontSize: 15,
+                  color: const Color(0xff141333)
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _addDefaultItemWindow(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Add Default Item',
+            style: TextStyle(
+              fontFamily: 'TT Norms',
+              fontSize: 25,
+              color: const Color(0xff141333)
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        _addNewItemTitleWindow(context, TemplateDataType.BubbleTab);
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.flag,
+                                size: 50,
+                              ),
+                              Text(
+                                "Alliance Score",
                                 style: TextStyle(
                                   fontFamily: 'TT Norms',
                                   fontSize: 15,
