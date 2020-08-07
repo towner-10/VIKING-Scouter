@@ -5,18 +5,12 @@ class LatestMatchDataCard extends StatelessWidget {
 
   final MatchData data;
 
-  String highGoalOuter;
-  String highGoalInner;
-  String lowGoal;
   String score;
   String rp;
 
   LatestMatchDataCard({@required this.data}) {
-    highGoalOuter = (data.data['autoHighGoalInner'] + data.data['highGoalInner']) != null ? (data.data['autoHighGoalInner'] + data.data['highGoalInner']).toString() : '0';
-    highGoalInner = (data.data['autoHighGoalOuter'] + data.data['highGoalOuter']) != null ? (data.data['autoHighGoalOuter'] + data.data['highGoalOuter']).toString() : '0';
-    lowGoal = (data.data['autoLowGoal'] + data.data['autoLowGoal']) != null ? (data.data['autoLowGoal'] + data.data['autoLowGoal']).toString() : '0';
-    score = (data.data['score']) != null ? (data.data['score']).toString() : '0';
-    rp = (data.data['rp']) != null ? (data.data['rp']).toString() : '0';
+    score = data.data['score'] != null ? (data.data['score']).toString() : '0';
+    rp = data.data['rp'] != null ? (data.data['rp']).toString() : '0';
   }
 
   @override
@@ -54,38 +48,6 @@ class LatestMatchDataCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  highGoalOuter + ' High Goal Outer',
-                  style: TextStyle(
-                    fontFamily: 'TT Norms',
-                    fontSize: 15,
-                    color: const Color(0xffffffff),
-                  ),
-                ),
-                Text(
-                  highGoalInner + ' High Goal Inner',
-                  style: TextStyle(
-                    fontFamily: 'TT Norms',
-                    fontSize: 15,
-                    color: const Color(0xffffffff),
-                  ),
-                ),
-                Text(
-                  lowGoal + ' Low Goal',
-                  style: TextStyle(
-                    fontFamily: 'TT Norms',
-                    fontSize: 15,
-                    color: const Color(0xffffffff),
-                  ),
-                ),
-                Text(
-                  '',
-                  style: TextStyle(
-                    fontFamily: 'TT Norms',
-                    fontSize: 15,
-                    color: const Color(0xffffffff),
-                  ),
-                ),
                 Text(
                   score + ' Match Score',
                   style: TextStyle(

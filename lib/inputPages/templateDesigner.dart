@@ -394,13 +394,15 @@ class TemplateDesignerState extends State<TemplateDesigner> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Wrap(
+                  alignment: WrapAlignment.center,
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pop();
-                        _addNewItemTitleWindow(context, TemplateDataType.BubbleTab);
+                        setState(() {
+                          items.add(new TemplateData(title: "Alliance Score", dbName: "score", type: TemplateDataType.NumberInput));
+                          Navigator.of(context).pop();
+                        });
                       },
                       child: Card(
                         child: Padding(
@@ -426,8 +428,11 @@ class TemplateDesignerState extends State<TemplateDesigner> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pop();
-                        _addNewItemTitleWindow(context, TemplateDataType.Counter);
+                        setState(() {
+                          items.add(new TemplateData(title: "Match Notes", type: TemplateDataType.Header));
+                          items.add(new TemplateData(title: "Match Notes Input", dbName: "matchNotes", type: TemplateDataType.TextInput));
+                          Navigator.of(context).pop();
+                        });
                       },
                       child: Card(
                         child: Padding(
@@ -435,11 +440,11 @@ class TemplateDesignerState extends State<TemplateDesigner> {
                           child: Column(
                             children: [
                               Icon(
-                                Icons.add_circle_outline,
+                                Icons.speaker_notes,
                                 size: 50,
                               ),
                               Text(
-                                "Counter",
+                                "Match Notes",
                                 style: TextStyle(
                                   fontFamily: 'TT Norms',
                                   fontSize: 15,
@@ -453,8 +458,10 @@ class TemplateDesignerState extends State<TemplateDesigner> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pop();
-                        _addNewItemTitleWindow(context, TemplateDataType.TextInput);
+                        setState(() {
+                          items.add(new TemplateData(title: "Ranking Points", dbName: "rp", type: TemplateDataType.Counter));
+                          Navigator.of(context).pop();
+                        });
                       },
                       child: Card(
                         child: Padding(
@@ -466,94 +473,7 @@ class TemplateDesignerState extends State<TemplateDesigner> {
                                 size: 50,
                               ),
                               Text(
-                                "Text Input",
-                                style: TextStyle(
-                                  fontFamily: 'TT Norms',
-                                  fontSize: 15,
-                                  color: Colors.black
-                                ),
-                              )
-                            ]
-                          )
-                        )
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(padding: EdgeInsets.symmetric(vertical: 5)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        _addNewItemTitleWindow(context, TemplateDataType.NumberInput);
-                      },
-                      child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.score,
-                                size: 50,
-                              ),
-                              Text(
-                                "Number Input",
-                                style: TextStyle(
-                                  fontFamily: 'TT Norms',
-                                  fontSize: 15,
-                                  color: Colors.black
-                                ),
-                              )
-                            ]
-                          )
-                        )
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        _addNewItemTitleWindow(context, TemplateDataType.Timer);
-                      },
-                      child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.timer,
-                                size: 50,
-                              ),
-                              Text(
-                                "Timer",
-                                style: TextStyle(
-                                  fontFamily: 'TT Norms',
-                                  fontSize: 15,
-                                  color: Colors.black
-                                ),
-                              )
-                            ]
-                          )
-                        )
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        _addNewItemTitleWindow(context, TemplateDataType.Header);
-                      },
-                      child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.view_headline,
-                                size: 50,
-                              ),
-                              Text(
-                                "Header",
+                                "Ranking Points",
                                 style: TextStyle(
                                   fontFamily: 'TT Norms',
                                   fontSize: 15,

@@ -100,48 +100,77 @@ class InputPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SafeArea(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: 20,
-                  top: 20
-                ),
+      body: LayoutBuilder(
+        builder: (context, constraint) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraint.maxHeight),
+              child: IntrinsicHeight(
                 child: Column(
-                  children: widgets
-                ),
+                  children: [
+                    SafeArea(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 15, left: 5),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => Navigator.of(context).pop()),
+                        )
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+
+                          if (!currentFocus.hasPrimaryFocus) {
+                            currentFocus.unfocus();
+                          }
+                        },
+                        child: SafeArea(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 20,
+                              top: 20
+                            ),
+                            child: Column(
+                              children: widgets
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Feedback.forTap(context);
+                        _db.newMatchData(_db.getWorkingMatchDataValues());
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 81.0,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff141333),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(
+                              fontFamily: 'TT Norms',
+                              fontSize: 30,
+                              color: const Color(0xffffffff),
+                              fontWeight: FontWeight.w700,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                Feedback.forTap(context);
-                _db.newMatchData(_db.getWorkingMatchDataValues());
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 81.0,
-                decoration: BoxDecoration(
-                  color: const Color(0xff141333),
-                ),
-                child: Center(
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(
-                      fontFamily: 'TT Norms',
-                      fontSize: 30,
-                      color: const Color(0xffffffff),
-                      fontWeight: FontWeight.w700,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-            )
-          ],
-        )
+          );
+        }
       ),
     );
   }
