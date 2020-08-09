@@ -31,6 +31,27 @@ class TeamPageState extends State<TeamPage> {
   List<File> imageFiles = new List<File>();
   List<UnicornButton> childButtons = new List<UnicornButton>();
 
+  Directory teamImageDirectory;
+
+  @override
+  void initState() { 
+    super.initState();
+
+    getApplicationDocumentsDirectory().then((directory) {
+      Directory(directory.path + '/' + teamNumber.toString() + '/images').create(recursive: true).then((value) {
+        teamImageDirectory = value;
+
+        teamImageDirectory.list(followLinks: false).listen((FileSystemEntity entity) {
+          if (entity is File) {
+            setState(() {
+              imageFiles.add(entity);
+            });
+          }
+        });
+      });
+    });
+  }
+
   TeamPageState(this.teamNumber, this.teamName) {
     childButtons.add(UnicornButton(
       hasLabel: true,
