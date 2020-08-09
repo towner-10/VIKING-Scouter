@@ -133,21 +133,30 @@ class TeamPageState extends State<TeamPage> {
                       spacing: 8,
                       runSpacing: 8,
                       children: imageFiles.map((e) {
-                        return ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxWidth: 175,
-                            maxHeight: 175
-                          ), 
-                          child: Container(
-                            decoration: new BoxDecoration(
-                              borderRadius: BorderRadius.circular(25.0),
-                              image: new DecorationImage(
-                                fit: BoxFit.fitWidth,
-                                alignment: FractionalOffset.topCenter,
-                                image: MemoryImage(e.readAsBytesSync()),
-                              )
+                        return InkWell(
+                          onLongPress: () {
+                            e.delete().then((value) {
+                              setState(() {
+                                imageFiles.remove(e);
+                              });
+                            });
+                          },
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                                maxWidth: 175,
+                                maxHeight: 175
                             ),
-                          ),
+                            child: Container(
+                              decoration: new BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  image: new DecorationImage(
+                                    fit: BoxFit.contain,
+                                    alignment: FractionalOffset.topCenter,
+                                    image: MemoryImage(e.readAsBytesSync()),
+                                  )
+                              ),
+                            ),
+                          )
                         );
                       }).toList()
                     ),

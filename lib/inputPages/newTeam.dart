@@ -13,74 +13,87 @@ class NewTeamPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: SizedBox(
           height: MediaQuery.of(context).size.height - 81,
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 15, left: 5),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => Navigator.of(context).pop()),
-                )
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 20
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          Padding(padding: EdgeInsets.only(top: 135)),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Team Number',
-                              style: TextStyle(
-                                fontFamily: 'TT Norms',
-                                fontSize: 30,
-                                color: const Color(0xff000000),
-                                fontWeight: FontWeight.w700,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          TextInputField(
-                            hintText: "Enter team number...",
-                            controller: _teamNumberController,
-                            type: TextInputType.number,
-                          )
-                        ],                  
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 5)),
-                      Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Team Name',
-                              style: TextStyle(
-                                fontFamily: 'TT Norms',
-                                fontSize: 30,
-                                color: const Color(0xff000000),
-                                fontWeight: FontWeight.w700,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          TextInputField(
-                            hintText: "Enter team name...", 
-                            controller: _teamNameController
-                          )
-                        ],                  
+          child: GestureDetector(
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+            },
+            child: Container(
+               child: Column(
+                children: [
+                  SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 15, left: 5),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => Navigator.of(context).pop()),
                       )
-                    ],
+                    ),
                   ),
-                )
-              ),
-              Padding(padding: EdgeInsets.only(bottom: 150)),
-            ],
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: 20
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            children: [
+                              Padding(padding: EdgeInsets.only(top: 135)),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Team Number',
+                                  style: TextStyle(
+                                    fontFamily: 'TT Norms',
+                                    fontSize: 30,
+                                    color: const Color(0xff000000),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              TextInputField(
+                                hintText: "Enter team number...",
+                                controller: _teamNumberController,
+                                type: TextInputType.number,
+                              )
+                            ],
+                          ),
+                          Padding(padding: EdgeInsets.symmetric(vertical: 5)),
+                          Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Team Name',
+                                  style: TextStyle(
+                                    fontFamily: 'TT Norms',
+                                    fontSize: 30,
+                                    color: const Color(0xff000000),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              TextInputField(
+                                  hintText: "Enter team name...",
+                                  controller: _teamNameController
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 150)),
+                ],
+              )
+            )
           )
         )
       ),
