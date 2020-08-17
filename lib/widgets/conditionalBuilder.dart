@@ -9,10 +9,21 @@ class ConditionalBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (condition == true) {
-      return builder;
-    }
+    return condition ? builder : Container();
+  }
+}
 
-    return Container();
+class ConditionalBuilderMultiple extends StatelessWidget {
+
+  final Widget trueBuilder;
+  final Widget falseBuilder;
+
+  final bool condition;
+
+  ConditionalBuilderMultiple({this.trueBuilder, this.falseBuilder, this.condition});
+
+  @override
+  Widget build(BuildContext context) {
+    return condition ? trueBuilder : falseBuilder;
   }
 }

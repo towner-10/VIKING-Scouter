@@ -14,9 +14,9 @@ class Database {
   Box _workingMatchData;
   Box _workingTemplateData;
   Box _matchData;
-  Box _templateData;
-  Box _teamData;
   Box _preferences;
+  Box<Template> _templateData;
+  Box<TeamData> _teamData;
 
   /// Initializes a new match within the database with the team number and match number in the temp box
   initNewMatch(int teamNumber, int matchNumber) async {
@@ -51,7 +51,12 @@ class Database {
     _templateData.add(data);
   }
 
-  /// Remove a template from the database using its index
+  /// Add/Update a team
+  updateTeam(TeamData data) {
+    _teamData.put(data.teamNumber, data);
+  }
+
+  /// Remove a template from the database using it's index
   removeTemplate(int index) {
     _templateData.deleteAt(index);
   }
@@ -62,6 +67,11 @@ class Database {
     data.removeAt(index);
 
     _preferences.put('competitions', data);
+  }
+
+  /// Remove a team from the database using it's index
+  removeTeam(int teamNumber) {
+    _teamData.delete(teamNumber);
   }
 
   clearTemplateData() {
@@ -78,6 +88,18 @@ class Database {
     return matches;
   }
 
+  List<MatchData> getTeamMatches(int team) {
+    List<MatchData> matches = new List<MatchData>();
+    
+    getMatches().forEach((element) {
+      if (element.team == team) {
+        matches.add(element);
+      }
+    });
+
+    return matches;
+  }
+
   List<Template> getTemplates() {
     List<Template> templates = new List<Template>();
 
@@ -88,6 +110,20 @@ class Database {
     templates.add(defaultTemplate);
 
     return templates;
+  }
+
+  List<TeamData> getTeams() {
+    List<TeamData> data = new List<TeamData>();
+
+    for (int i = 0; i < _teamData.length; i++) {
+      data.add(_teamData.getAt(i));
+    }
+
+    return data;
+  }
+
+  TeamData getTeam(int teamNumber) {
+    return _teamData.get(teamNumber);
   }
 
   /// This will update a key in the workingMatchData Hive database with the given value.
@@ -147,6 +183,7 @@ class Database {
   MatchData getWorkingMatchDataValues() {
     int teamNumber;
     int matchNumber;
+    String templateName = getPreference('selectedTemplate').toString();
     Map<String, dynamic> data = new Map<String, dynamic>();
 
     _workingMatchData.keys.forEach((key) {
@@ -168,6 +205,7 @@ class Database {
       match: matchNumber,
       time: DateTime.now(),
       scout: getPreferenceDefault('scoutName', '').toString(),
+      templateName: templateName,
       data: data
     );
   }

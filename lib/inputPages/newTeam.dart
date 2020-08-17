@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/widgets/textInputField.dart';
 import 'package:viking_scouter/contextPages/teamPage.dart';
+import 'package:viking_scouter/models/teamData.dart';
 
 class NewTeamPage extends StatelessWidget {
   
@@ -14,6 +16,7 @@ class NewTeamPage extends StatelessWidget {
         child: SizedBox(
           height: MediaQuery.of(context).size.height - 81,
           child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
             onTap: () {
               FocusScopeNode currentFocus = FocusScope.of(context);
 
@@ -102,7 +105,17 @@ class NewTeamPage extends StatelessWidget {
           Feedback.forTap(context);
 
           if (_teamNumberController.text.length != 0 || _teamNameController.text.length != 0) {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => TeamPage(int.parse(_teamNumberController.text), _teamNameController.text))).then((value) => Navigator.of(context).pop());
+            if (Database.getInstance().getTeam(int.parse(_teamNumberController.text)) == null) {
+              TeamData data = new TeamData(teamNumber: int.parse(_teamNumberController.text), teamName: _teamNameController.text);
+              Database.getInstance().updateTeam(data);
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => TeamPage(data))).then((value) => Navigator.of(context).pop());
+            }
+            else {
+              _teamNumberController.clear();
+              _teamNameController.clear();
+
+              _teamExists(context);
+            }
           }
           else {
             _teamNumberController.clear();
@@ -112,7 +125,7 @@ class NewTeamPage extends StatelessWidget {
           }
         },
         child: Container(
-          width: MediaQuery. of(context).size.width,
+          width: MediaQuery.of(context).size.width,
           height: 81.0,
           decoration: BoxDecoration(
             color: const Color(0xff141333),
@@ -153,6 +166,54 @@ class NewTeamPage extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'One of the input fields was empty. Please complete the form before continuing.',
+                  style: TextStyle(
+                    fontFamily: 'TT Norms',
+                    fontSize: 15,
+                    color: const Color(0xff141333)
+                  ),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget> [
+            FlatButton(
+              child: Text(
+                'Confirm',
+                style: TextStyle(
+                  fontFamily: 'TT Norms',
+                  fontSize: 15,
+                  color: const Color(0xff141333)
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _teamExists(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Error',
+            style: TextStyle(
+              fontFamily: 'TT Norms',
+              fontSize: 25,
+              color: const Color(0xff141333)
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'The team that you inputed already exists, please choose another team number.',
                   style: TextStyle(
                     fontFamily: 'TT Norms',
                     fontSize: 15,

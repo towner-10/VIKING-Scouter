@@ -18,20 +18,26 @@ class TeamDataAdapter extends TypeAdapter<TeamData> {
     };
     return TeamData(
       teamNumber: fields[0] as int,
-      scoutData: (fields[1] as Map)?.cast<String, dynamic>(),
-      images: (fields[2] as List)?.cast<String>(),
+      teamName: fields[1] as String,
+      scoutData: (fields[2] as Map)?.cast<String, dynamic>(),
+      headerImage: fields[3] as String,
+      images: (fields[4] as List)?.cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, TeamData obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.teamNumber)
       ..writeByte(1)
-      ..write(obj.scoutData)
+      ..write(obj.teamName)
       ..writeByte(2)
+      ..write(obj.scoutData)
+      ..writeByte(3)
+      ..write(obj.headerImage)
+      ..writeByte(4)
       ..write(obj.images);
   }
 

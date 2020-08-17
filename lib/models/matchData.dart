@@ -4,6 +4,7 @@ class MatchData {
   final int match;
   final DateTime time;
   final String scout;
+  final String templateName;
   final Map<String, dynamic> data;
 
   MatchData({
@@ -11,6 +12,7 @@ class MatchData {
     this.match,
     this.time,
     this.scout,
+    this.templateName,
     this.data
   });
 
@@ -20,6 +22,7 @@ class MatchData {
       match: json['match'],
       time: json['time'],
       scout: json['scout'],
+      templateName: json['template'],
       data: Map<String, dynamic>.from(json['data'])
     );
   }
@@ -30,6 +33,7 @@ class MatchData {
       'match': this.match,
       'time': this.time,
       'scout': this.scout,
+      'template': this.templateName,
       'data': this.data
     };
   }

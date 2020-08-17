@@ -103,6 +103,7 @@ class InputPage extends StatelessWidget {
       body: LayoutBuilder(
         builder: (context, constraint) {
           return SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: constraint.maxHeight),
               child: IntrinsicHeight(
@@ -119,6 +120,7 @@ class InputPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
                         onTap: () {
                           FocusScopeNode currentFocus = FocusScope.of(context);
 

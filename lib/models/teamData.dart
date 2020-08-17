@@ -9,10 +9,16 @@ class TeamData {
   final int teamNumber;
 
   @HiveField(1)
-  final Map<String, dynamic> scoutData;
+  String teamName;
 
   @HiveField(2)
-  final List<String> images;
+  Map<String, dynamic> scoutData;
 
-  TeamData({this.teamNumber, this.scoutData, this.images});
+  @HiveField(3)
+  String headerImage;
+
+  @HiveField(4)
+  List<String> images;
+
+  TeamData({this.teamNumber, this.teamName, this.scoutData, this.headerImage, this.images});
 }
