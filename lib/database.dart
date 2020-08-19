@@ -71,6 +71,10 @@ class Database {
 
   /// Remove a team from the database using it's index
   removeTeam(int teamNumber) {
+    getTeam(teamNumber).images.forEach((element) {
+      File(element).deleteSync();
+    });
+    
     _teamData.delete(teamNumber);
   }
 
