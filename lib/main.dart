@@ -19,8 +19,6 @@ class VIKINGScouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
-
     if (_db.isFirstLaunch() == true) {
       return MaterialApp(
         title: 'VIKING Scouter',
