@@ -15,7 +15,7 @@ class TextInputField extends StatelessWidget {
 
       controller.addListener(() {
         if (type == TextInputType.number) {
-          Database.getInstance().updateWorkingMatchDataValue(dbName, int.parse(controller.text) == null ? 0 : int.parse(controller.text));
+          Database.getInstance().updateWorkingMatchDataValue(dbName, int.tryParse(controller.text));
         }
         else {
           Database.getInstance().updateWorkingMatchDataValue(dbName, controller.text);

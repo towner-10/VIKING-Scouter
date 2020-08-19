@@ -82,7 +82,7 @@ class InputPage extends StatelessWidget {
             widgets.add(InputItem(
               title: _template.data[i].title,
               dataType: TimerWidget(
-                onChange: (value) => _db.updateWorkingMatchDataValue(_template.data[i].dbName, value.inSeconds),
+                onChange: (value) => _db.updateWorkingMatchDataValue(_template.data[i].dbName, value),
               )
             ));
             break;

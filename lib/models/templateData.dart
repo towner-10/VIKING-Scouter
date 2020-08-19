@@ -14,6 +14,7 @@ final Template defaultTemplate = new Template(
     new TemplateData(title: "High Goal - Inner", dbName: "highGoalInner", type: TemplateDataType.Counter),
     new TemplateData(title: "High Goal - Outer", dbName: "highGoalOuter", type: TemplateDataType.Counter),
     new TemplateData(title: "Low Goal", dbName: "lowGoal", type: TemplateDataType.Counter),
+    new TemplateData(title: "Cycle Time", dbName: "cycleTime", type: TemplateDataType.Timer),
     new TemplateData(title: "Endgame", type: TemplateDataType.Header),
     new TemplateData(title: "Climb", dbName: "climb", type: TemplateDataType.BubbleTab),
     new TemplateData(title: "Balanced", dbName: "balanced", type: TemplateDataType.BubbleTab),

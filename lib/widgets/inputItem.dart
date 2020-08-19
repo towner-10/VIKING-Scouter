@@ -18,7 +18,6 @@ class InputItem extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 40),
           child: Container(
-            height: 60.0,
             margin: EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24.0),
@@ -31,7 +30,10 @@ class InputItem extends StatelessWidget {
                 ),
               ],
             ),
-            child: dataType,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: 60.0),
+              child: dataType,
+            )
           ),
         )
       ],

@@ -60,6 +60,11 @@ class TeamsState extends State<Teams> {
                         subtitle: Text(e.teamNumber.toString()),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => TeamPage(e))).then((value) => setState(() {})),
+                        onLongPress: () {
+                          setState(() {
+                            _db.removeTeam(e.teamNumber);
+                          });
+                        },
                       );
                     }
 
@@ -69,6 +74,11 @@ class TeamsState extends State<Teams> {
                       subtitle: Text(e.teamNumber.toString()),
                       trailing: Icon(Icons.keyboard_arrow_right),
                       onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => TeamPage(e))).then((value) => setState(() {})),
+                      onLongPress: () {
+                        setState(() {
+                          _db.removeTeam(e.teamNumber);
+                        });
+                      },
                     );
                   }).toList(),
                 ),
