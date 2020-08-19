@@ -15,54 +15,56 @@ class NewTemplatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height - 81,
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 15, left: 5),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => Navigator.of(context).pop()),
-                )
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 20
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          Padding(padding: EdgeInsets.only(top: 135)),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Template Name',
-                              style: TextStyle(
-                                fontFamily: 'TT Norms',
-                                fontSize: 30,
-                                color: const Color(0xff000000),
-                                fontWeight: FontWeight.w700,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height - 81,
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 15, left: 5),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => Navigator.of(context).pop()),
+                  )
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 20
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            Padding(padding: EdgeInsets.only(top: 135)),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Template Name',
+                                style: TextStyle(
+                                  fontFamily: 'TT Norms',
+                                  fontSize: 30,
+                                  color: const Color(0xff000000),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                textAlign: TextAlign.left,
                               ),
-                              textAlign: TextAlign.left,
                             ),
-                          ),
-                          TextInputField(
-                            hintText: "Enter template name...", 
-                            controller: _templateNameController
-                          )
-                        ],                  
-                      ),
-                    ],
-                  ),
-                )
-              ),
-              Padding(padding: EdgeInsets.only(bottom: 150)),
-            ],
+                            TextInputField(
+                              hintText: "Enter template name...", 
+                              controller: _templateNameController
+                            )
+                          ],                  
+                        ),
+                      ],
+                    ),
+                  )
+                ),
+                Padding(padding: EdgeInsets.only(bottom: 150)),
+              ],
+            )
           )
         )
       ),

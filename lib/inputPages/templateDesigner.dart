@@ -103,14 +103,38 @@ class TemplateDesignerState extends State<TemplateDesigner> {
 
                 return Dismissible(
                   key: ValueKey(e),
-                  background: Container(color: Colors.red),
+                  background: Container(
+                    color: Colors.red,
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                    )
+                  ),
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
                     setState(() {
                       items.remove(e);
                     });
                   },
-                  child: ListTile(title: Text(e.title), subtitle: Text(type), trailing: Icon(Icons.menu)),
+                  child: ListTile(
+                    title: Text(
+                      e.title,
+                      style: TextStyle(
+                        fontFamily: 'TT Norms',
+                      ),
+                    ), 
+                    subtitle: Text(
+                      type,
+                      style: TextStyle(
+                        fontFamily: 'TT Norms',
+                      ),
+                    ), 
+                    trailing: Icon(Icons.menu)
+                  ),
                 );
               }).toList().cast<Widget>(),
               onReorder: (oldIndex, newIndex) {

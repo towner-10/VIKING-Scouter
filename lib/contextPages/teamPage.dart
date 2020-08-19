@@ -120,6 +120,7 @@ class TeamPageState extends State<TeamPage> {
                   constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 2, minWidth: MediaQuery.of(context).size.width),
                   child: CupertinoScrollbar(
                     child: GridView.builder(
+                      shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -140,7 +141,6 @@ class TeamPageState extends State<TeamPage> {
                                 child: Image.file(imageFiles[index], fit: BoxFit.cover)
                               ), 
                             ),
-                              
                             falseBuilder: Image.file(imageFiles[index], fit: BoxFit.cover), 
                             condition: imageFiles[index].path == teamData.headerImage
                           )
@@ -151,16 +151,16 @@ class TeamPageState extends State<TeamPage> {
                 )
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 15, bottom: 30),
+                padding: EdgeInsets.only(top: 40, left: 15, bottom: 30),
                 child: Header('Matches'),
               ),
               Wrap(
                 spacing: 15,
                 runSpacing: 10,
                 children: db.getTeamMatches(teamData.teamNumber).map((e) => LatestMatchDataCard(data: e)).toList().cast<Widget>(),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
               ),
             ],
           ),

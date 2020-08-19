@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/mainPages/home.dart';
 import 'package:viking_scouter/mainPages/onboarding.dart';
@@ -19,17 +18,9 @@ class VIKINGScouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_db.isFirstLaunch() == true) {
-      return MaterialApp(
-        title: 'VIKING Scouter',
-        home: Onboarding(),
-      );
-    }
-    else {
-      return MaterialApp(
-        title: 'VIKING Scouter',
-        home: Home(),
-      );
-    }
+    return MaterialApp(
+      title: 'VIKING Scouter',
+      home: _db.isFirstLaunch() ? Onboarding() : Home(),
+    );
   }
 }

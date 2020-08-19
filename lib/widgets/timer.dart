@@ -61,9 +61,7 @@ class TimerState extends State<TimerWidget> with SingleTickerProviderStateMixin 
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> timesWidgets = new List<Widget>();
-
-    timesWidgets = times.length >= 1 ? times.map((e) {
+    List<Widget> timesWidgets = times.length >= 1 ? times.map((e) {
       return Padding(
         padding: EdgeInsets.all(5),
         child: Row(

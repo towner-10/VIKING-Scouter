@@ -56,8 +56,8 @@ class TeamsState extends State<Teams> {
                     if (File(e.headerImage).existsSync() == true) {
                       return ListTile(
                         leading: e.headerImage == null ? Icon(Icons.outlined_flag) : CircleAvatar(radius: 25, backgroundImage: MemoryImage(File(e.headerImage).readAsBytesSync()), backgroundColor: CustomColors.darkBlue),
-                        title: Text(e.teamName),
-                        subtitle: Text(e.teamNumber.toString()),
+                        title: Text(e.teamName, style: TextStyle(fontFamily: 'TT Norms')),
+                        subtitle: Text(e.teamNumber.toString(), style: TextStyle(fontFamily: 'TT Norms')),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => TeamPage(e))).then((value) => setState(() {})),
                         onLongPress: () {
