@@ -1,3 +1,4 @@
+import 'package:auto_animated/auto_animated.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:viking_scouter/customColors.dart';
@@ -12,8 +13,12 @@ import 'package:viking_scouter/widgets/subHeader.dart';
 
 class Home extends StatefulWidget {
   
+  final initialPage;
+
+  Home({this.initialPage = 0});
+
   @override
-  HomeState createState() => HomeState();
+  HomeState createState() => HomeState(this.initialPage);
 }
 
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
@@ -21,10 +26,19 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final PageController controller = new PageController();
   final Database _db = Database.getInstance();
 
+  final initialPage;
+
   int _bottomNavIndex = 0;
   String title;
 
   List<MatchData> matchData = new List<MatchData>();
+
+  HomeState(this.initialPage) {
+    if (initialPage != 0) {
+      _bottomNavIndex = initialPage;
+      controller.jumpToPage(initialPage);
+    }
+  }
 
   @override
   void initState() {
@@ -81,17 +95,38 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             ),
                           ),
                           ConditionalBuilder(
-                            builder: Column(children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 20, bottom: 15),
-                                child:  SubHeader('Recent Top Matches'),
-                              ),
-                              Wrap(
-                                spacing: 15,
-                                runSpacing: 10,
-                                children: _db.getMatches().map((e) => LatestMatchDataCard(data: e)).toList().cast<Widget>(),
-                              ),
-                            ]),
+                            builder: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 20, bottom: 15),
+                                  child: SubHeader('Recent Top Matches'),
+                                ),
+                                AnimateIfVisibleWrapper(
+                                  showItemInterval: Duration(milliseconds: 150),
+                                  child: Wrap(
+                                    spacing: 15,
+                                    runSpacing: 10,
+                                    children: _db.getMatches().map((e) {
+                                      return AnimateIfVisible(
+                                        key: ValueKey(e),
+                                        duration: Duration(milliseconds: 250),
+                                        builder: (
+                                          BuildContext context,
+                                          Animation<double> animation,
+                                        ) =>
+                                          FadeTransition(
+                                            opacity: Tween<double>(
+                                              begin: 0,
+                                              end: 1,
+                                            ).animate(animation),
+                                            child: LatestMatchDataCard(data: e),
+                                          ),
+                                      );
+                                    }).toList().cast<Widget>(),
+                                  ),
+                                )
+                              ]
+                            ),
                             condition: _db.getMatches().length != 0,
                           ),
                           Padding(
