@@ -93,10 +93,6 @@ class TeamPageState extends State<TeamPage> {
                 padding: EdgeInsets.only(top: 15, left: 15, bottom: 30),
                 child: Column(
                   children: [
-                    ConditionalBuilder(
-                      builder: Container(),
-                      condition: teamData.headerImage != null,
-                    ),
                     Header(teamData.teamName),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -186,51 +182,55 @@ class TeamPageState extends State<TeamPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(41.0),
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(41.0),
+                    ),
+                    color: const Color(0xfff8f8f8),
+                    focusColor: const Color(0xfff8f8f8),
+                    child: Center(
+                      child: Text(
+                        'Set as Header',
+                        style: TextStyle(
+                          fontFamily: 'TT Norms',
+                          fontSize: 18,
+                          color: Colors.black
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ),
+                    onPressed: () {
+                      updateHeaderImage(e);
+                      Navigator.of(context).pop();
+                    }
                   ),
-                  color: const Color(0xfff8f8f8),
-                  focusColor: const Color(0xfff8f8f8),
-                  child: Center(
-                    child: Text(
-                      'Set as Header',
-                      style: TextStyle(
-                        fontFamily: 'TT Norms',
-                        fontSize: 18,
-                        color: Colors.black
-                      ),
-                      textAlign: TextAlign.center,
-                    )
-                  ),
-                  onPressed: () {
-                    updateHeaderImage(e);
-
-                    Navigator.of(context).pop();
-                  }
                 ),
-                RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(41.0),
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(41.0),
+                    ),
+                    color: const Color(0xfff8f8f8),
+                    focusColor: const Color(0xfff8f8f8),
+                    child: Center(
+                      child: Text(
+                        'Delete',
+                        style: TextStyle(
+                          fontFamily: 'TT Norms',
+                          fontSize: 18,
+                          color: Colors.black
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ),
+                    onPressed: () {
+                      removeImage(e);
+                      Navigator.of(context).pop();
+                    }
                   ),
-                  color: const Color(0xfff8f8f8),
-                  focusColor: const Color(0xfff8f8f8),
-                  child: Center(
-                    child: Text(
-                      'Delete',
-                      style: TextStyle(
-                        fontFamily: 'TT Norms',
-                        fontSize: 18,
-                        color: Colors.black
-                      ),
-                      textAlign: TextAlign.center,
-                    )
-                  ),
-                  onPressed: () {
-                    removeImage(e);
-
-                    Navigator.of(context).pop();
-                  }
                 )
               ],
             ),

@@ -13,7 +13,7 @@ import 'package:viking_scouter/widgets/subHeader.dart';
 
 class Home extends StatefulWidget {
   
-  final initialPage;
+  final int initialPage;
 
   Home({this.initialPage = 0});
 
@@ -26,14 +26,12 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final PageController controller = new PageController();
   final Database _db = Database.getInstance();
 
-  final initialPage;
-
   int _bottomNavIndex = 0;
   String title;
 
   List<MatchData> matchData = new List<MatchData>();
 
-  HomeState(this.initialPage) {
+  HomeState(int initialPage) {
     if (initialPage != 0) {
       _bottomNavIndex = initialPage;
       controller.jumpToPage(initialPage);
@@ -156,7 +154,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
             controller.jumpToPage(_bottomNavIndex);
           });
         },
-        bottomPadding: 10,
+        bottomPadding: MediaQuery.of(context).padding.bottom,
         circleColor: CustomColors.darkBlue,
         activeIconColor: Colors.white,
         textColor: CustomColors.darkBlue,

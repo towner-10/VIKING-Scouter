@@ -1,16 +1,40 @@
-# viking_scouter
+# VIKING Scouter
 
-Open-source scouting app for FRC. Built using Flutter.
+Open-source scouting app for FRC. Built using Flutter. Built with cross-platform in mind, while also staying offline.
 
-## Getting Started
+<br>
 
-This project is a starting point for a Flutter application.
+## Images
 
-A few resources to get you started if this is your first Flutter project:
+<img src="assets/images/home.png" alt="Home Screen" width="45%"></img>
+<img src="assets/images/teams.png" alt="Teams" width="45%"></img>
+<img src="assets/images/team-page.png" alt="Team Page" width="45%"></img>
+<img src="assets/images/settings.png" alt="Settings Screen" width="45%"></img>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<br>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Features
+
+<br>
+
+### Scouting 📃
+- Match scouting using templates
+- Ability to share data to Google Drive or through Bluetooth Serial
+- Metrics:
+    - Header
+    - Bubble Tab (True/False)
+    - Stopwatch
+    - Counter
+    - Number Input
+    - Text Input
+
+### Templates 📋
+- Customizable templates
+- Built-in templates for current year
+
+### Planned
+- Pit Scouting
+- Bluetooth Support
+- Share Support
+
+
