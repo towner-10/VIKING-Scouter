@@ -2,20 +2,14 @@
 
 Open-source scouting app for FRC. Built using Flutter. Built with cross-platform in mind, while also staying offline.
 
-<br>
-
 ## Images
 
-<img src="assets/images/home.png" alt="Home Screen" width="45%"></img>
-<img src="assets/images/teams.png" alt="Teams" width="45%"></img>
-<img src="assets/images/team-page.png" alt="Team Page" width="45%"></img>
-<img src="assets/images/settings.png" alt="Settings Screen" width="45%"></img>
-
-<br>
+<img src="assets/images/home.png" alt="Home Screen" width="35%"></img>
+<img src="assets/images/teams.png" alt="Teams" width="35%"></img>
+<img src="assets/images/team-page.png" alt="Team Page" width="35%"></img>
+<img src="assets/images/settings.png" alt="Settings Screen" width="35%"></img>
 
 ## Features
-
-<br>
 
 ### Scouting 📃
 - Match scouting using templates
@@ -32,7 +26,7 @@ Open-source scouting app for FRC. Built using Flutter. Built with cross-platform
 - Customizable templates
 - Built-in templates for current year
 
-### Planned
+### Planned 📅
 - Pit Scouting
 - Bluetooth Support
 - Share Support
