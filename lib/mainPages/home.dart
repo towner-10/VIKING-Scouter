@@ -1,5 +1,6 @@
 import 'package:auto_animated/auto_animated.dart';
-import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:custom_bottom_navigation_bar/custom_bottom_navigation_bar.dart';
+import 'package:custom_bottom_navigation_bar/custom_bottom_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:viking_scouter/customColors.dart';
 import 'package:viking_scouter/database.dart';
@@ -142,24 +143,33 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ],
         ),
       ), 
-      bottomNavigationBar: FancyBottomNavigation(
-        tabs: [
-          TabData(iconData: Icons.home, title: "Home"),
-          TabData(iconData: Icons.flag, title: "Teams"),
-          TabData(iconData: Icons.settings, title: "Settings")
+      bottomNavigationBar: CustomBottomNavigationBar(
+        items: [
+          CustomBottomNavigationBarItem(
+            icon: Icons.home,
+            title: "Home",
+          ),
+          CustomBottomNavigationBarItem(
+            icon: Icons.flag,
+            title: "Teams",
+          ),
+          CustomBottomNavigationBarItem(
+            icon: Icons.settings,
+            title: "Settings",
+          ),
         ],
-        onTabChangedListener: (position) {
+        onTap: (position) {
           setState(() {
             _bottomNavIndex = position;
             controller.jumpToPage(_bottomNavIndex);
           });
         },
-        bottomPadding: MediaQuery.of(context).padding.bottom * 0.5,
-        circleColor: CustomColors.darkBlue,
-        activeIconColor: Colors.white,
-        textColor: CustomColors.darkBlue,
-        inactiveIconColor: CustomColors.darkBlue,
-      )
+        backgroundColor: CustomColors.darkBlue,
+        unselectedItemColor: Colors.white,
+        selectedItemColor: Colors.white,
+        itemBackgroudnColor: CustomColors.darkBlue,
+        itemOutlineColor: Colors.white,
+      ),
     );
   }
 }

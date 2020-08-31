@@ -18,10 +18,9 @@ dependencies:
   image_picker: ^0.6.7+4
   image: ^2.1.14
   unicorndial: ^1.1.5
+  flutter_speed_dial: ^1.2.5
   auto_animated: ^2.1.0
-  fancy_bottom_navigation:
-    git:
-      url: git://github.com/atessift/fancy_bottom_navigation.git
+  custom_bottom_navigation_bar: ^0.0.1
 
 dev_dependencies:
   hive_generator: ^0.7.1

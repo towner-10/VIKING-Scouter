@@ -22,9 +22,9 @@ class LatestMatchDataCard extends StatelessWidget {
         color: const Color(0xff141333),
         boxShadow: [
           BoxShadow(
-            color: const Color(0x29000000),
+            color: Colors.grey,
             offset: Offset(5, 5),
-            blurRadius: 6,
+            blurRadius: 4,
           ),
         ],
       ),

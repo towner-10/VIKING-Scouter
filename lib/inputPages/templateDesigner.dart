@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:viking_scouter/customColors.dart';
 import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/models/templateData.dart';
 import 'package:viking_scouter/widgets/header.dart';
 import 'package:viking_scouter/widgets/textInputField.dart';
-import 'package:unicorndial/unicorndial.dart';
 
 class TemplateDesigner extends StatefulWidget {
 
@@ -18,7 +18,7 @@ class TemplateDesignerState extends State<TemplateDesigner> {
 
   List<TemplateData> items = new List<TemplateData>();
 
-  List<UnicornButton> childButtons = List<UnicornButton>();
+  List<SpeedDialChild> childButtons = List<SpeedDialChild>();
 
   @override
   void initState() { 
@@ -26,30 +26,20 @@ class TemplateDesignerState extends State<TemplateDesigner> {
 
     _db = Database.getInstance();
 
-    childButtons.add(UnicornButton(
-      hasLabel: true,
-      labelText: 'Default Items',
-      labelColor: Colors.black,
-      currentButton: FloatingActionButton(
-        heroTag: 'default',
-        mini: true,
-        backgroundColor: CustomColors.darkBlue,
-        child: Icon(Icons.add_circle),
-        onPressed: () => _addDefaultItemWindow(context).then((value) => setState(() {})),
-      ),
+    childButtons.add(SpeedDialChild(
+      child: Icon(Icons.add_circle),
+      backgroundColor: CustomColors.darkBlue,
+      label: 'Default Items',
+      labelStyle: TextStyle(fontSize: 18.0),
+      onTap: () => _addDefaultItemWindow(context).then((value) => setState(() {}))
     ));
 
-    childButtons.add(UnicornButton(
-      hasLabel: true,
-      labelText: 'Custom Item',
-      labelColor: Colors.black,
-      currentButton: FloatingActionButton(
-        heroTag: 'custom',
-        mini: true,
-        backgroundColor: CustomColors.darkBlue,
-        child: Icon(Icons.add_circle_outline),
-        onPressed: () => _addNewItemWindow(context).then((value) => setState(() {})),
-      ),
+    childButtons.add(SpeedDialChild(
+      child: Icon(Icons.add_circle_outline),
+      backgroundColor: CustomColors.darkBlue,
+      label: 'Custom Item',
+      labelStyle: TextStyle(fontSize: 18.0),
+      onTap: () => _addNewItemWindow(context).then((value) => setState(() {}))
     ));
   }
 
@@ -150,11 +140,22 @@ class TemplateDesignerState extends State<TemplateDesigner> {
           )
         ),
       ),
-      floatingActionButton: UnicornDialer(
+      /*floatingActionButton: UnicornDialer(
         parentButtonBackground: CustomColors.darkBlue,
         orientation: UnicornOrientation.VERTICAL,
         parentButton: Icon(Icons.add),
         childButtons: childButtons,
+      ),*/
+      floatingActionButton: SpeedDial(
+        shape: CircleBorder(),
+        curve: Curves.easeIn,
+        children: childButtons,
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+        overlayColor: Colors.black,
+        overlayOpacity: 0.5,
+        elevation: 10.0,
+        backgroundColor: CustomColors.darkBlue,
       ),
       bottomNavigationBar: GestureDetector(
         onTap: () {
