@@ -154,7 +154,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
             controller.jumpToPage(_bottomNavIndex);
           });
         },
-        bottomPadding: MediaQuery.of(context).padding.bottom,
+        bottomPadding: MediaQuery.of(context).padding.bottom * 0.5,
         circleColor: CustomColors.darkBlue,
         activeIconColor: Colors.white,
         textColor: CustomColors.darkBlue,
