@@ -110,50 +110,55 @@ class TeamPageState extends State<TeamPage> {
                   ],
                 )
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 2, minWidth: MediaQuery.of(context).size.width),
-                  child: CupertinoScrollbar(
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 30,
+              ConditionalBuilder(
+                condition: imageFiles.length > 0,
+                builder: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 2, minWidth: MediaQuery.of(context).size.width),
+                    child: CupertinoScrollbar(
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 30,
+                        ),
+                        itemCount: imageFiles.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onLongPress: () {
+                              _contextMenu(context, imageFiles[index]);
+                            },
+                            child: ConditionalBuilderMultiple(
+                              trueBuilder: Container(
+                                color: const Color(0xff6d8ac4),
+                                child: Opacity(
+                                  opacity: 0.6,
+                                  child: Image.file(imageFiles[index], fit: BoxFit.cover)
+                                ), 
+                              ),
+                              falseBuilder: Image.file(imageFiles[index], fit: BoxFit.cover), 
+                              condition: imageFiles[index].path == teamData.headerImage
+                            )
+                          );
+                        }
                       ),
-                      itemCount: imageFiles.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onLongPress: () {
-                            _contextMenu(context, imageFiles[index]);
-                          },
-                          child: ConditionalBuilderMultiple(
-                            trueBuilder: Container(
-                              color: const Color(0xff6d8ac4),
-                              child: Opacity(
-                                opacity: 0.6,
-                                child: Image.file(imageFiles[index], fit: BoxFit.cover)
-                              ), 
-                            ),
-                            falseBuilder: Image.file(imageFiles[index], fit: BoxFit.cover), 
-                            condition: imageFiles[index].path == teamData.headerImage
-                          )
-                        );
-                      }
                     ),
-                  ),
-                )
+                  )
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 40, left: 15, bottom: 30),
                 child: Header('Matches'),
               ),
-              Wrap(
-                spacing: 15,
-                runSpacing: 10,
-                children: db.getTeamMatches(teamData.teamNumber).map((e) => LatestMatchDataCard(data: e)).toList().cast<Widget>(),
+              CupertinoScrollbar(
+                child: Wrap(
+                  spacing: 15,
+                  runSpacing: 10,
+                  children: db.getTeamMatches(teamData.teamNumber).map((e) => LatestMatchDataCard(data: e)).toList().cast<Widget>(),
+                ),  
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),

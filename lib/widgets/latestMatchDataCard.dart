@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:viking_scouter/models/matchData.dart';
+import 'package:viking_scouter/database.dart';
+
+final Database _db = Database.getInstance();
 
 class LatestMatchDataCard extends StatelessWidget {
 
@@ -9,8 +12,7 @@ class LatestMatchDataCard extends StatelessWidget {
   String rp;
 
   LatestMatchDataCard({@required this.data}) {
-    score = data.data['score'] != null ? (data.data['score']).toString() : '0';
-    rp = data.data['rp'] != null ? (data.data['rp']).toString() : '0';
+    
   }
 
   @override
@@ -47,24 +49,7 @@ class LatestMatchDataCard extends StatelessWidget {
             padding: EdgeInsets.only(top: 10, left: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  score + ' Match Score',
-                  style: TextStyle(
-                    fontFamily: 'TT Norms',
-                    fontSize: 15,
-                    color: const Color(0xffffffff),
-                  ),
-                ),
-                Text(
-                  rp + ' Ranking Points',
-                  style: TextStyle(
-                    fontFamily: 'TT Norms',
-                    fontSize: 15,
-                    color: const Color(0xffffffff),
-                  ),
-                )
-              ],
+              children: buildDisplayedData(),
             ),
           ),
           Padding(
@@ -81,5 +66,33 @@ class LatestMatchDataCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  List<Widget> buildDisplayedData() {
+    List<Widget> displayedData = new List<Widget>();
+
+    score = data.data['score'] != null ? (data.data['score']).toString() : '0';
+    rp = data.data['rp'] != null ? (data.data['rp']).toString() : '0';
+
+    _db.getTemplates().forEach((template) {
+      if (template.name == data.templateName) {
+        template.data.forEach((templateData) {
+          if (templateData.display) {
+            displayedData.add(
+              Text(
+                data.data[templateData.dbName] + ' ' + templateData.title,
+                style: TextStyle(
+                  fontFamily: 'TT Norms',
+                  fontSize: 15,
+                  color: const Color(0xffffffff),
+                ),
+              )
+            );
+          }
+        });
+      }
+    });
+
+    return displayedData;
   }
 }

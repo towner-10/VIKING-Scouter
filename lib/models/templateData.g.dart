@@ -116,19 +116,22 @@ class TemplateDataAdapter extends TypeAdapter<TemplateData> {
       title: fields[0] as String,
       dbName: fields[1] as String,
       type: fields[2] as TemplateDataType,
+      display: fields[3] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, TemplateData obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
       ..write(obj.dbName)
       ..writeByte(2)
-      ..write(obj.type);
+      ..write(obj.type)
+      ..writeByte(3)
+      ..write(obj.display);
   }
 
   @override

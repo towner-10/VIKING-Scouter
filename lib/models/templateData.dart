@@ -18,8 +18,8 @@ final Template defaultTemplate = new Template(
     new TemplateData(title: "Endgame", type: TemplateDataType.Header),
     new TemplateData(title: "Climb", dbName: "climb", type: TemplateDataType.BubbleTab),
     new TemplateData(title: "Balanced", dbName: "balanced", type: TemplateDataType.BubbleTab),
-    new TemplateData(title: "Alliance Score", dbName: "score", type: TemplateDataType.NumberInput),
-    new TemplateData(title: "Ranking Points", dbName: "rp", type: TemplateDataType.Counter),
+    new TemplateData(title: "Alliance Score", dbName: "score", type: TemplateDataType.NumberInput, display: true),
+    new TemplateData(title: "Ranking Points", dbName: "rp", type: TemplateDataType.Counter, display: true),
     new TemplateData(title: "Match Notes", type: TemplateDataType.Header),
     new TemplateData(dbName: "matchNotes", type: TemplateDataType.TextInput)
   ]
@@ -71,5 +71,8 @@ class TemplateData {
   @HiveField(2)
   final TemplateDataType type;
 
-  TemplateData({this.title, this.dbName, this.type});
+  @HiveField(3)
+  final bool display;
+
+  TemplateData({this.title, this.dbName, this.type, this.display = false});
 }

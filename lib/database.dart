@@ -130,8 +130,6 @@ class Database {
     return _teamData.get(teamNumber);
   }
 
-  /// This will update a key in the workingMatchData Hive database with the given value.
-  /// Returns a bool to represent the success of the operation.
   bool updateWorkingMatchDataValue(String key, dynamic value) {
     if (_workingMatchData.isOpen == true) {
       _workingMatchData.put(key, value);
@@ -184,10 +182,13 @@ class Database {
     return _preferences.get('competitions', defaultValue: ['Miami Valley Regional', 'Greater Kansas City Regional']);
   }
 
+  String getSelectedTemplate() {
+    return getPreference('selectedTemplate').toString();
+  }
+
   MatchData getWorkingMatchDataValues() {
     int teamNumber;
     int matchNumber;
-    String templateName = getPreference('selectedTemplate').toString();
     Map<String, dynamic> data = new Map<String, dynamic>();
 
     _workingMatchData.keys.forEach((key) {
@@ -209,7 +210,7 @@ class Database {
       match: matchNumber,
       time: DateTime.now(),
       scout: getPreferenceDefault('scoutName', '').toString(),
-      templateName: templateName,
+      templateName: getSelectedTemplate(),
       data: data
     );
   }

@@ -120,7 +120,7 @@ class NewMatchPage extends StatelessWidget {
             color: const Color(0xff141333),
           ),
           child: Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom - 10),
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
             child: Center(
               child: Text(
                 'Next',
