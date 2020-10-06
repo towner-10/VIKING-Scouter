@@ -8,7 +8,9 @@ import 'package:viking_scouter/customColors.dart';
 import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/inputPages/newTeam.dart';
 import 'package:viking_scouter/models/teamData.dart';
+import 'package:viking_scouter/widgets/conditionalBuilder.dart';
 import 'package:viking_scouter/widgets/header.dart';
+import 'package:viking_scouter/widgets/subHeader.dart';
 
 final Database _db = Database.getInstance();
 
@@ -54,6 +56,13 @@ class TeamsState extends State<Teams> {
                       ),
                     ],
                   )
+                ),
+                ConditionalBuilder(
+                  builder: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Center(child: SubHeader("No Teams")),
+                  ),
+                  condition: teamData.length == 0,
                 ),
                 CupertinoScrollbar(
                   child: LiveList(

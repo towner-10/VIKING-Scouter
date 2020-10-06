@@ -49,9 +49,9 @@ class TextInputField extends StatelessWidget {
             )
           ),
           enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                  color: CustomColors.grey
-              )
+            borderSide: BorderSide(
+              color: CustomColors.grey
+            )
           ),
           hintText: hintText,
           hintStyle: TextStyle(

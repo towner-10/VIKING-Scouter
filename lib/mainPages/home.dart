@@ -2,7 +2,6 @@ import 'package:auto_animated/auto_animated.dart';
 import 'package:custom_bottom_navigation_bar/custom_bottom_navigation_bar.dart';
 import 'package:custom_bottom_navigation_bar/custom_bottom_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:viking_scouter/customColors.dart';
 import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/inputPages/newMatch.dart';
@@ -25,19 +24,20 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
-  final PageController controller = new PageController();
   final Database _db = Database.getInstance();
+
+  PageController controller;
 
   int _bottomNavIndex = 0;
   String title;
 
+  bool switchValue = false;
+
   List<MatchData> matchData = new List<MatchData>();
 
   HomeState(int initialPage) {
-    if (initialPage != 0) {
-      _bottomNavIndex = initialPage;
-      controller.jumpToPage(initialPage);
-    }
+    _bottomNavIndex = initialPage;
+    this.controller = new PageController(initialPage: initialPage);
   }
 
   @override
@@ -80,20 +80,23 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   textAlign: TextAlign.left,
                                 )
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(right: 10),
-                                child: CircleAvatar(
-                                  backgroundColor: CustomColors.darkBlue,
-                                  radius: 24,
-                                  child: IconButton(
-                                    icon: Icon(Icons.add),
-                                    color: Colors.white,
-                                    onPressed: () {
-                                      Navigator.of(context).push(new MaterialPageRoute(builder: (context) => NewMatchPage())).then((value) => setState(() {}));
-                                    }
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: CircleAvatar(
+                                    backgroundColor: CustomColors.darkBlue,
+                                    radius: 24,
+                                    child: IconButton(
+                                      icon: Icon(Icons.add),
+                                      color: Colors.white,
+                                      onPressed: () {
+                                        Navigator.of(context).push(new MaterialPageRoute(builder: (context) => NewMatchPage())).then((value) => setState(() {}));
+                                      }
+                                    )
                                   )
-                                ),
-                              ),
+                                )
+                              )
                             ],
                           ),
                           Padding(padding: EdgeInsets.symmetric(vertical: 10)),

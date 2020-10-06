@@ -525,80 +525,108 @@ class TemplateDesignerState extends State<TemplateDesigner> {
     TextEditingController _nameController = new TextEditingController();
     TextEditingController _dbController = new TextEditingController();
 
+    bool displayBool = false;
+
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'Add New Item',
-            style: TextStyle(
-              fontFamily: 'TT Norms',
-              fontSize: 25,
-              color: const Color(0xff141333)
-            ),
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget> [
-                TextInputField(hintText: "Enter name..", controller: _nameController),
-                TextInputField(hintText: "Enter database name...", controller: _dbController),
-                Padding(
-                  padding: EdgeInsets.only(left: 20),
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(
+                'Add New Item',
+                style: TextStyle(
+                  fontFamily: 'TT Norms',
+                  fontSize: 25,
+                  color: const Color(0xff141333)
+                ),
+              ),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget> [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Switch(
+                          activeColor: CustomColors.darkBlue,
+                          value: displayBool, 
+                          onChanged: (value) {
+                            setState(() {
+                              displayBool = value;
+                            });
+                          }
+                        ),
+                        Text(
+                          "Show on Match Data Card",
+                          style: TextStyle(
+                            fontFamily: 'TT Norms',
+                            fontSize: 15,
+                            color: CustomColors.grey
+                          ),
+                        )
+                      ],
+                    ),
+                    TextInputField(hintText: "Enter name..", controller: _nameController),
+                    TextInputField(hintText: "Enter database name...", controller: _dbController),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        "Database name can be empty if type is a header",
+                        style: TextStyle(
+                          fontFamily: 'TT Norms',
+                          fontSize: 15,
+                          color: CustomColors.grey
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              actions: <Widget> [
+                FlatButton(
                   child: Text(
-                    "Database name can be empty if type is a header",
+                    'Cancel',
                     style: TextStyle(
                       fontFamily: 'TT Norms',
                       fontSize: 15,
-                      color: CustomColors.grey
+                      color: const Color(0xff141333)
                     ),
                   ),
-                )
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                FlatButton(
+                  child: Text(
+                    'Confirm',
+                    style: TextStyle(
+                      fontFamily: 'TT Norms',
+                      fontSize: 15,
+                      color: const Color(0xff141333)
+                    ),
+                  ),
+                  onPressed: () {
+                    if (_nameController.text.length != 0 && _dbController.text.length != 0) {
+                      setState(() {
+                        items.add(new TemplateData(title: _nameController.text, display: displayBool, dbName: _dbController.text, type: type));
+                        Navigator.of(context).pop();
+                      });
+                    }
+                    else if (_nameController.text.length != 0 && _dbController.text.length == 0) {
+                      setState(() {
+                        items.add(new TemplateData(title: _nameController.text, display: displayBool, type: type));
+                        Navigator.of(context).pop();
+                      });
+                    } 
+                    else {
+                      return;
+                    }
+                  },
+                ),
               ],
-            ),
-          ),
-          actions: <Widget> [
-            FlatButton(
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  fontFamily: 'TT Norms',
-                  fontSize: 15,
-                  color: const Color(0xff141333)
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text(
-                'Confirm',
-                style: TextStyle(
-                  fontFamily: 'TT Norms',
-                  fontSize: 15,
-                  color: const Color(0xff141333)
-                ),
-              ),
-              onPressed: () {
-                if (_nameController.text.length != 0 && _dbController.text.length != 0) {
-                  setState(() {
-                    items.add(new TemplateData(title: _nameController.text, dbName: _dbController.text, type: type));
-                    Navigator.of(context).pop();
-                  });
-                }
-                else if (_nameController.text.length != 0 && _dbController.text.length == 0) {
-                  setState(() {
-                    items.add(new TemplateData(title: _nameController.text, type: type));
-                    Navigator.of(context).pop();
-                  });
-                } 
-                else {
-                  return;
-                }
-              },
-            ),
-          ],
+            );
+          }
         );
       },
     );
