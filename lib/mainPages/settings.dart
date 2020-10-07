@@ -56,106 +56,122 @@ class SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Padding(
+      padding: EdgeInsets.only(top: 20, left: 20, right: 10),
       child: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 20, left: 20, right: 10),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Settings',
-                    style: TextStyle(
-                      fontFamily: 'TT Norms',
-                      fontSize: 30,
-                      color: const Color(0xff000000),
-                      fontWeight: FontWeight.w700,
-                    ),
-                    textAlign: TextAlign.left,
-                  )
-                ),
-                Padding(padding: EdgeInsets.symmetric(vertical: 15)),
-                SubHeader('Scout Name'),
-                TextInputField(hintText: 'Enter name...', controller: _scoutNameController),
-                Padding(padding: EdgeInsets.symmetric(vertical: 15)),
-                SubHeader('Competition'),
-                Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 18),
-                  child: DropdownButton(
-                    key: competitionDropdownKey,
-                    isExpanded: true,
-                    underline: Container(
-                      color: CustomColors.grey,
-                      height: 1.0
-                    ),
-                    items: buildCompetitionsMenuItems(false),
-                    value: _selectedCompetition,
-                    style: TextStyle(
-                        fontFamily: 'TT Norms',
-                        fontSize: 15,
-                        color: Colors.black
-                    ),
-                    onChanged: (value) {
-                      if (value == 'add') {
-                        _newCompetition(context);
-                        return;
-                      }
-                      else if (value == 'remove') {
-                        _deleteCompetition(context);
-                        return;
-                      }
-
-                      setState(() {
-                        _selectedCompetition = value;
-                      });
-
-                      _db.updatePreference('selectedCompetition', _selectedCompetition);
-                    }
-                  ),
-                ),
-                Padding(padding: EdgeInsets.symmetric(vertical: 15)),
-                SubHeader('Template'),
-                Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 18),
-                  child: DropdownButton(
-                    key: templateDropdownKey,
-                    isExpanded: true,
-                    underline: Container(
-                      color: CustomColors.grey,
-                      height: 1.0
-                    ),
-                    items: buildTemplatesMenuItems(false),
-                    value: _selectedTemplate,
-                    style: TextStyle(
-                        fontFamily: 'TT Norms',
-                        fontSize: 15,
-                        color: Colors.black
-                    ),
-                    onChanged: (value) {
-                      if (value == 'add') {
-                        Navigator.of(context).push(new MaterialPageRoute(builder: (context) => NewTemplatePage())).then((value) => setState(() {
-                          templates = _db.getTemplates();
-                        }));
-                        return;
-                      }
-                      else if (value == 'remove') {
-                        _deleteTemplate(context);
-                        return;
-                      }
-
-                      setState(() {
-                        _selectedTemplate = value;
-                      });
-
-                      _db.updatePreference('selectedTemplate', _selectedTemplate);
-                    }
-                  ),
-                ),
-              ],
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Settings',
+              style: TextStyle(
+                fontFamily: 'TT Norms',
+                fontSize: 30,
+                color: const Color(0xff000000),
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.left,
             )
           ),
+          Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+          SubHeader('Scout Name'),
+          TextInputField(hintText: 'Enter name...', controller: _scoutNameController),
+          Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+          SubHeader('Competition'),
+          Padding(
+            padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 18),
+            child: DropdownButton(
+              key: competitionDropdownKey,
+              isExpanded: true,
+              underline: Container(
+                color: CustomColors.grey,
+                height: 1.0
+              ),
+              items: buildCompetitionsMenuItems(false),
+              value: _selectedCompetition,
+              style: TextStyle(
+                  fontFamily: 'TT Norms',
+                  fontSize: 15,
+                  color: Colors.black
+              ),
+              onChanged: (value) {
+                if (value == 'add') {
+                  _newCompetition(context);
+                  return;
+                }
+                else if (value == 'remove') {
+                  _deleteCompetition(context);
+                  return;
+                }
+
+                setState(() {
+                  _selectedCompetition = value;
+                });
+
+                _db.updatePreference('selectedCompetition', _selectedCompetition);
+              }
+            ),
+          ),
+          Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+          SubHeader('Template'),
+          Padding(
+            padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 18),
+            child: DropdownButton(
+              key: templateDropdownKey,
+              isExpanded: true,
+              underline: Container(
+                color: CustomColors.grey,
+                height: 1.0
+              ),
+              items: buildTemplatesMenuItems(false),
+              value: _selectedTemplate,
+              style: TextStyle(
+                  fontFamily: 'TT Norms',
+                  fontSize: 15,
+                  color: Colors.black
+              ),
+              onChanged: (value) {
+                if (value == 'add') {
+                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => NewTemplatePage())).then((value) => setState(() {
+                    templates = _db.getTemplates();
+                  }));
+                  return;
+                }
+                else if (value == 'remove') {
+                  _deleteTemplate(context);
+                  return;
+                }
+
+                setState(() {
+                  _selectedTemplate = value;
+                });
+
+                _db.updatePreference('selectedTemplate', _selectedTemplate);
+              }
+            ),
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: FlatButton(
+                onPressed: () {
+                  showLicensePage(
+                    context: context,
+                    applicationName: "VIKING Scouter",
+                    applicationVersion: "0.1.1-beta"
+                  );
+                },
+                
+                child: Text(
+                  "0.1.1-beta",
+                  style:  TextStyle(
+                    fontFamily: 'TT Norms',
+                    fontSize: 12
+                  ),
+                ),
+              )
+            )
+          )
         ],
       ),
     );

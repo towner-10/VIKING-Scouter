@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:viking_scouter/customColors.dart';
 import 'package:viking_scouter/database.dart';
 import 'package:viking_scouter/mainPages/home.dart';
 import 'package:viking_scouter/mainPages/onboarding.dart';
@@ -21,6 +22,9 @@ class VIKINGScouter extends StatelessWidget {
     return MaterialApp(
       title: 'VIKING Scouter',
       home: _db.isFirstLaunch() ? Onboarding() : Home(),
+      theme: ThemeData(
+        primaryColor: CustomColors.darkBlue
+      ),
     );
   }
 }

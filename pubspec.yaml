@@ -3,7 +3,7 @@ description: Open-source scouting app for FRC. Built using Flutter.
 
 publish_to: 'none' 
 
-version: 1.0.0+1
+version: 0.1.1-beta
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
