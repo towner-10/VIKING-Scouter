@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:auto_animated/auto_animated.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:viking_scouter/contextPages/teamPage.dart';
@@ -65,28 +63,11 @@ class TeamsState extends State<Teams> {
                   condition: teamData.length == 0,
                 ),
                 CupertinoScrollbar(
-                  child: LiveList(
+                  child: ListView.builder(
                     shrinkWrap: true,
-                    showItemInterval: Duration(milliseconds: 150),
-                    showItemDuration: Duration(milliseconds: 350),
-                    reAnimateOnVisibility: true,
                     scrollDirection: Axis.vertical,
-                    itemBuilder: (BuildContext context, int index, Animation<double> animation) {
-                      return FadeTransition(
-                        opacity: Tween<double>(
-                          begin: 0,
-                          end: 1,
-                        ).animate(animation),
-                        // And slide transition
-                        child: SlideTransition(
-                          position: Tween<Offset>(
-                            begin: Offset(0, -0.1),
-                            end: Offset.zero,
-                          ).animate(animation),
-                          // Paste you Widget
-                          child: buildTeamTile(index),
-                        ),
-                      );
+                    itemBuilder: (BuildContext context, int index) {
+                      return buildTeamTile(index);
                     },
                     itemCount: teamData.length,
                   ),

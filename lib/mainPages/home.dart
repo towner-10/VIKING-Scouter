@@ -1,4 +1,3 @@
-import 'package:auto_animated/auto_animated.dart';
 import 'package:custom_bottom_navigation_bar/custom_bottom_navigation_bar.dart';
 import 'package:custom_bottom_navigation_bar/custom_bottom_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
@@ -111,30 +110,13 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   padding: EdgeInsets.only(top: 20, bottom: 15),
                                   child: SubHeader('Recent Top Matches'),
                                 ),
-                                AnimateIfVisibleWrapper(
-                                  showItemInterval: Duration(milliseconds: 150),
-                                  child: Wrap(
-                                    spacing: 15,
-                                    runSpacing: 10,
-                                    children: _db.getMatches().map((e) {
-                                      return AnimateIfVisible(
-                                        key: ValueKey(e),
-                                        duration: Duration(milliseconds: 250),
-                                        builder: (
-                                          BuildContext context,
-                                          Animation<double> animation,
-                                        ) =>
-                                          FadeTransition(
-                                            opacity: Tween<double>(
-                                              begin: 0,
-                                              end: 1,
-                                            ).animate(animation),
-                                            child: LatestMatchDataCard(data: e),
-                                          ),
-                                      );
-                                    }).toList().cast<Widget>(),
-                                  ),
-                                )
+                                Wrap(
+                                  spacing: 15,
+                                  runSpacing: 10,
+                                  children: _db.getMatches().map((e) {
+                                    return LatestMatchDataCard(data: e);
+                                  }).toList().cast<Widget>(),
+                                ),
                               ]
                             ),
                             condition: _db.getMatches().length != 0,
